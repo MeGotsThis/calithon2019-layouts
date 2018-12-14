@@ -36,6 +36,7 @@ async function init() {
     require('./oot-bingo');
     require('./caspar');
     require('./intermissions');
+    const {loginToTracker} = require('./horaro');
     if (TRACKER_CREDENTIALS_CONFIGURED) {
         await loginToTracker();
         // Tracker logins expire every 2 hours. Re-login every 90 minutes.
@@ -96,46 +97,3 @@ async function init() {
             'The interview question system (Lightning Round) will be disabled.');
     }
 }
-// Fetch the login page, and run the response body through cheerio
-// so we can extract the CSRF token from the hidden input field.
-// Then, POST with our username, password, and the csrfmiddlewaretoken.
-function loginToTracker() {
-    const nodecg = nodecgApiContext.get();
-    const loginLog = new nodecg.Logger(`${nodecg.bundleName}:tracker`);
-    if (isFirstLogin) {
-        loginLog.info('Logging in as %s...', nodecg.bundleConfig.tracker.username);
-    }
-    else {
-        loginLog.info('Refreshing tracker login session as %s...', nodecg.bundleConfig.tracker.username);
-    }
-    return request({
-        uri: LOGIN_URL,
-        transform(body) {
-            return cheerio.load(body);
-        }
-    }).then($ => request({
-        method: 'POST',
-        uri: LOGIN_URL,
-        form: {
-            username: nodecg.bundleConfig.tracker.username,
-            password: nodecg.bundleConfig.tracker.password,
-            csrfmiddlewaretoken: $('#login-form > input[name="csrfmiddlewaretoken"]').val()
-        },
-        headers: {
-            Referer: LOGIN_URL
-        },
-        resolveWithFullResponse: true,
-        simple: false
-    })).then(() => {
-        if (isFirstLogin) {
-            isFirstLogin = false;
-            loginLog.info('Logged in as %s.', nodecg.bundleConfig.tracker.username);
-        }
-        else {
-            loginLog.info('Refreshed session as %s.', nodecg.bundleConfig.tracker.username);
-        }
-    }).catch(err => {
-        loginLog.error('Error authenticating!\n', err);
-    });
-}
-//# sourceMappingURL=index.js.map

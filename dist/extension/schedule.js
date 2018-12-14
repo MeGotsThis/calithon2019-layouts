@@ -9,6 +9,7 @@ const RequestPromise = require("request-promise");
 // Ours
 const nodecgApiContext = require("./util/nodecg-api-context");
 const timer = require("./timekeeping");
+const horaroApi = require('./schedule-horaro');
 const checklist = require("./checklist");
 const urls_1 = require("./urls");
 const diff_run_1 = require("./lib/diff-run");
@@ -145,115 +146,104 @@ nodecg.listenFor('resetRun', (pk, cb) => {
  * Gets the latest schedule info from the GDQ tracker.
  * @returns A a promise resolved with "true" if the schedule was updated, "false" if unchanged.
  */
-function update() {
-    const runnersPromise = request({
-        uri: urls_1.GDQUrls.runners,
-        json: true
-    });
-    const runsPromise = request({
-        uri: urls_1.GDQUrls.runs,
-        json: true
-    });
-    const adsPromise = TRACKER_CREDENTIALS_CONFIGURED ?
-        request({
-            uri: urls_1.GDQUrls.ads,
-            json: true
-        }) : Promise.resolve([]);
-    const interviewsPromise = TRACKER_CREDENTIALS_CONFIGURED ?
-        request({
-            uri: urls_1.GDQUrls.interviews,
-            json: true
-        }) : Promise.resolve([]);
-    return Promise.all([
-        runnersPromise, runsPromise, adsPromise, interviewsPromise
-    ]).then(([runnersJSON, runsJSON, adsJSON, interviewsJSON]) => {
-        const formattedRunners = [];
-        runnersJSON.forEach((obj) => {
-            formattedRunners[obj.pk] = {
-                stream: obj.fields.stream.split('/').filter(Boolean).pop(),
-                name: obj.fields.name
-            };
-        });
-        if (!deepEqual(formattedRunners, runnersRep.value)) {
-            runnersRep.value = clone(formattedRunners);
-        }
-        const formattedSchedule = calcFormattedSchedule({
-            rawRuns: runsJSON,
-            formattedRunners,
-            formattedAds: adsJSON.map(formatAd),
-            formattedInterviews: interviewsJSON.map(formatInterview)
-        });
-        // If nothing has changed, return.
-        if (deepEqual(formattedSchedule, scheduleRep.value)) {
-            return false;
-        }
-        scheduleRep.value = formattedSchedule;
-        const newRunOrderMap = {};
-        runsJSON.forEach((run) => {
-            newRunOrderMap[run.fields.name] = run.fields.order;
-        });
-        runOrderMap.value = newRunOrderMap;
-        /* If no currentRun is set, set currentRun to the first run.
-         * Else, update the currentRun by pk, merging with and local changes.
-         */
-        if (!currentRunRep.value || currentRunRep.value.order === undefined) {
-            _seekToArbitraryRun(1);
-        }
-        else {
-            const currentRunAsInSchedule = findRunByPk(currentRunRep.value.pk);
-            // If our current nextRun replicant value not match the actual next run in the schedule anymore,
-            // throw away our current nextRun and replace it with the new next run in the schedule.
-            // This can only happen for two reasons:
-            //     1) The nextRun was deleted from the schedule.
-            //     2) A new run was added between currentRun and nextRun.
-            const newNextRun = _findRunAfter(currentRunRep.value);
-            if (!newNextRun || !nextRunRep.value || newNextRun.pk !== nextRunRep.value.pk) {
-                nextRunRep.value = clone(newNextRun);
-            }
-            /* If currentRun was found in the schedule, merge any changes from the schedule into currentRun.
-             * Else if currentRun has been removed from the schedule (determined by its `pk`),
-             * set currentRun to whatever run now has currentRun's `order` value.
-             * If that fails, set currentRun to the final run in the schedule.
-             */
-            if (currentRunAsInSchedule) {
-                [currentRunRep, nextRunRep].forEach(activeRunReplicant => {
-                    if (activeRunReplicant.value && activeRunReplicant.value.pk) {
-                        const runFromSchedule = findRunByPk(activeRunReplicant.value.pk);
-                        activeRunReplicant.value = diff_run_1.mergeChangesFromTracker(activeRunReplicant.value, runFromSchedule);
-                    }
-                });
-            }
-            else {
-                try {
-                    _seekToArbitraryRun(Math.max(currentRunRep.value.order - 1, 1));
-                }
-                catch (e) {
-                    if (e.message === 'Could not find run at specified order.') {
-                        const lastRunInSchedule = formattedSchedule.slice(0).reverse().find(item => item.type === 'run');
-                        _seekToArbitraryRun(lastRunInSchedule);
-                    }
-                    else {
-                        throw e;
-                    }
-                }
-            }
-        }
-        return true;
-    }).catch(error => {
-        const response = error.response;
-        const actualError = error.error || error;
-        if (response && response.statusCode === 403) {
-            nodecg.log.warn('[schedule] Permission denied, refreshing session and trying again...');
-            emitter.emit('permissionDenied');
-        }
-        else if (response) {
-            nodecg.log.error('[schedule] Failed to update, got status code', response.statusCode);
-        }
-        else {
-            nodecg.log.error('[schedule] Failed to update:', actualError);
-        }
-    });
-}
+ async function update() {
+   try {
+     const {id: scheduleId, game} = nodecg.bundleConfig.tracker.schedule;
+     let runsJSON = await horaroApi.getSchedule(scheduleId);
+     const formattedSchedule = calcFormattedSchedule({
+       rawRuns: runsJSON,
+     });
+
+     if (!await horaroApi.validatedEstimates(formattedSchedule, scheduleId)) {
+       return await update();
+     }
+
+     // If nothing has changed, return.
+     if (deepEqual(formattedSchedule, scheduleRep.value)) {
+       return false;
+     }
+
+     scheduleRep.value = formattedSchedule;
+
+     const newRunOrderMap = {};
+     runsJSON.forEach((run, i) => {
+       newRunOrderMap[run[2][game]] = i;
+     });
+     runOrderMap.value = newRunOrderMap;
+
+     /* If no currentRun is set, set currentRun to the first run.
+      * Else, update the currentRun by pk, merging with and local changes.
+      */
+     if (!currentRunRep.value
+         || typeof currentRunRep.value.order === 'undefined') {
+       _seekToArbitraryRun(0);
+     } else {
+       const currentRunAsInSchedule = findRunByPk(currentRunRep.value.pk);
+
+       // If our current nextRun replicant value not match the actual next run in
+       // the schedule anymore, throw away our current nextRun and replace it
+       // with the new next run in the schedule.
+       // This can only happen for two reasons:
+       //     1) The nextRun was deleted from the schedule.
+       //     2) A new run was added between currentRun and nextRun.
+       const newNextRun = _findRunAfter(currentRunRep.value);
+       if (!newNextRun
+           || !nextRunRep.value
+           || newNextRun.pk !== nextRunRep.value.pk) {
+         nextRunRep.value = clone(newNextRun);
+       }
+
+       /* If currentRun was found in the schedule, merge any changes from
+        * the schedule into currentRun.
+        * Else if currentRun has been removed from the schedule
+        * (determined by its `pk`),
+        * set currentRun to whatever run now has currentRun's `order` value.
+        * If that fails, set currentRun to the final run in the schedule.
+        */
+       if (currentRunAsInSchedule) {
+         [currentRunRep, nextRunRep].forEach((activeRunReplicant) => {
+           if (activeRunReplicant.value && activeRunReplicant.value.pk) {
+             const runFromSchedule = findRunByPk(activeRunReplicant.value.pk);
+             activeRunReplicant.value =
+               mergeChangesFromTracker(
+                 activeRunReplicant.value, runFromSchedule);
+           }
+         });
+       } else {
+         try {
+           _seekToArbitraryRun(Math.max(currentRunRep.value.order - 1, 1));
+         } catch (e) {
+           if (e.message === 'Could not find run at specified order.') {
+             const lastRunInSchedule =
+               formattedSchedule
+               .slice(0)
+               .reverse()
+               .find((item) => item.type === 'run');
+             _seekToArbitraryRun(lastRunInSchedule);
+           } else {
+             throw e;
+           }
+         }
+       }
+     }
+
+     return true;
+   } catch (error) {
+     const response = error.response;
+     const actualError = error.error || error;
+     if (response && response.statusCode === 403) {
+       nodecg.log.warn(
+         '[schedule] Permission denied, refreshing session and trying again...');
+       // emitter.emit('permissionDenied');
+     } else if (response) {
+       nodecg.log.error(
+         '[schedule] Failed to update, got status code', response.statusCode);
+     } else {
+       nodecg.log.error('[schedule] Failed to update:', actualError);
+     }
+   }
+ }
+
 /**
  * Seeks to the previous run in the schedule, updating currentRun and nextRun accordingly.
  * Clones the value of currentRun into nextRun.
@@ -326,11 +316,11 @@ function _seekToArbitraryRun(runOrOrder) {
  */
 function calcFormattedSchedule({ rawRuns, formattedRunners, formattedAds, formattedInterviews }) {
     const flatSchedule = [
-        ...rawRuns.map(run => {
-            return formatRun(run, formattedRunners);
+        ...rawRuns.map((run, i) => {
+            return formatRun(run, i);
         }),
-        ...formattedAds,
-        ...formattedInterviews
+        //...formattedAds,
+        //...formattedInterviews
     ].sort(suborderSort);
     const schedule = [];
     let adBreak;
@@ -364,30 +354,45 @@ function calcFormattedSchedule({ rawRuns, formattedRunners, formattedAds, format
  * @param formattedRunners - The formatted array of all runners, used to hydrate the run's runners.
  * @returns The formatted run object.
  */
-function formatRun(rawRun, formattedRunners) {
-    const runners = rawRun.fields.runners.slice(0, 4).map((runnerId) => {
-        return {
-            name: formattedRunners[runnerId].name,
-            stream: formattedRunners[runnerId].stream
-        };
-    });
+function formatRun(run, order) {
+  const {game, category: categoryIdx, runTime, setupTime, runners: runnersIdx,
+      notes, extra: extraIdx} =
+    nodecg.bundleConfig.tracker.schedule;
+  const runners = runnersIdx.map(({runner, twitch}) => {
     return {
-        name: rawRun.fields.display_name || 'Unknown',
-        longName: rawRun.fields.name || 'Unknown',
-        console: rawRun.fields.console || 'Unknown',
-        commentators: rawRun.fields.commentators || 'Unknown',
-        category: rawRun.fields.category || 'Any%',
-        setupTime: rawRun.fields.setup_time,
-        order: rawRun.fields.order,
-        estimate: rawRun.fields.run_time || 'Unknown',
-        releaseYear: rawRun.fields.release_year || '',
-        runners,
-        notes: rawRun.fields.tech_notes || '',
-        coop: rawRun.fields.coop || false,
-        id: rawRun.pk,
-        pk: rawRun.pk,
-        type: 'run'
+      name: run[2][runner],
+      stream: run[2][twitch],
     };
+  }).filter((runner) => {
+    return typeof runner.name !== 'undefined'
+      || typeof runner.stream !== 'undefined';
+  });
+  let data = {};
+  try {
+    data = (extraIdx && run[2][extraIdx] && JSON.parse(run[2][extraIdx])) || {};
+  } catch (error) {
+  }
+  let {name, longName, category, console: console_, releaseYear, coop,
+    ...extra} = data;
+
+  return {
+    name: name || run[2][game] || 'Unknown',
+    longName: longName || run[2][game] || 'Unknown',
+    category: category || run[2][categoryIdx] || 'Any%',
+    console: console_ || 'Unknown',
+    estimate: run[2][runTime] || 'Unknown',
+    setupTime: run[2][setupTime],
+    order: order,
+    releaseYear: releaseYear || '',
+    runners,
+    notes: run[2][notes] || '',
+    coop: coop || false,
+    extra,
+    _horaroEstimate: run[1],
+    id: run[0],
+    pk: run[0],
+    type: 'run',
+  };
 }
 /**
  * Formats a raw ad object from the GDQ Tracker API into a slimmed-down version for our use.
