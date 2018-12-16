@@ -70,7 +70,7 @@
   "homepage": "https://calithon.com/",
   "license": "Apache-2.0",
   "nodecg": {
-    "compatibleRange": "~1.3.0",
+    "compatibleRange": "^1.0.0",
     "dashboardPanels": [
       {
         "name": "Stream Tech Dashboard",
