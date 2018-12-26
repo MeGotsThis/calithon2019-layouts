@@ -4,6 +4,7 @@ const EventEmitter = require('events');
 const nodecg = require('./util/nodecg-api-context').get();
 const TimeUtils = require('./lib/time');
 const HoraroUtils = require('./lib/horaro');
+const GDQTypes = require("../types");
 
 const checklistComplete = nodecg.Replicant('checklistComplete');
 const stopwatch = nodecg.Replicant('stopwatch');
@@ -34,13 +35,6 @@ const timeTracking = nodecg.Replicant('timeTracking', {
 const updateHoraro = nodecg.Replicant('updateHoraro', {
   defaultValue: true,
 });
-
-const STOPWATCH_STATES = {
-  NOT_STARTED: 'not_started',
-  RUNNING: 'running',
-  PAUSED: 'paused',
-  FINISHED: 'finished',
-};
 
 const SCHEDULE_MODE = {
   NORMAL: 'NORMAL',
@@ -274,7 +268,7 @@ const updateFinishTime = async () => {
   if (!checklistComplete.value) {
     return;
   }
-  if (stopwatch.value.state !== STOPWATCH_STATES.FINISHED) {
+  if (stopwatch.value.state !== GDQTypes.StopwatchStateEnum.FINISHED) {
     return;
   }
 
@@ -386,5 +380,4 @@ module.exports = {
   updateStartTime,
   updateFinishTime,
   runChanging,
-  STOPWATCH_STATES,
 };

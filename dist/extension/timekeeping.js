@@ -11,6 +11,7 @@ const clone = require("clone");
 const liveSplitCore = require("livesplit-core");
 // Ours
 const nodecgApiContext = require("./util/nodecg-api-context");
+const horaroApi = require('./schedule-horaro');
 const TimeUtils = require("./lib/time");
 const GDQTypes = require("../types");
 const lsRun = liveSplitCore.Run.new();
@@ -128,6 +129,9 @@ function start(force = false) {
     if (!force && stopwatch.value.state === GDQTypes.StopwatchStateEnum.RUNNING) {
         return;
     }
+
+    const wasReset = stopwatch.value.state == GDQTypes.StopwatchStateEnum.NOT_STARTED;
+
     stopwatch.value.state = GDQTypes.StopwatchStateEnum.RUNNING;
     if (timer.currentPhase() === LS_TIMER_PHASE.NotRunning) {
         timer.start();
@@ -135,6 +139,10 @@ function start(force = false) {
     }
     else {
         timer.resume();
+    }
+
+    if (wasReset) {
+        horaroApi.updateStartTime().then();
     }
 }
 exports.start = start;
@@ -169,7 +177,11 @@ exports.pause = pause;
 /**
  * Pauses and resets the timer, clearing the time and results.
  */
-function reset() {
+async function reset() {
+    if (stopwatch.value.state === GDQTypes.StopwatchStateEnum.FINISHED) {
+        await horaroApi.updateFinishTime();
+    }
+
     pause();
     timer.reset(true);
     stopwatch.value.time = TimeUtils.createTimeStruct();
