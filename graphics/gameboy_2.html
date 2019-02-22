@@ -1,90 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Standard, 2 Player</title>
-	<link rel="stylesheet" href="style/layout.css">
-	<link rel="import" href="../shared/imports/gsap.html">
-	<link rel="import" href="elements/molecules/gdq-runner-nameplate/gdq-runner-nameplate.html">
-	<link rel="import" href="elements/molecules/gdq-runinfo/gdq-runinfo.html">
-	<link rel="import" href="elements/molecules/gdq-timer/gdq-timer.html">
-	<link rel="import" href="elements/molecules/gdq-tweet/gdq-tweet.html">
-	<link rel="import" href="elements/molecules/gdq-sponsors/gdq-sponsors.html">
+  <meta charset="UTF-8">
+  <title>Gameboy, 2 Player</title>
+  <link rel="stylesheet" href="style/layout.css">
+  <link rel="import" href="../shared/imports/gsap.html">
+  <link rel="import" href="elements/molecules/cali-finish-time/cali-finish-time.html">
+  <link rel="import" href="elements/molecules/cali-nameplate/cali-nameplate.html">
+  <link rel="import" href="elements/molecules/cali-run-info/cali-run-info.html">
+  <link rel="import" href="elements/molecules/cali-sponsors/cali-sponsors.html">
+  <link rel="import" href="elementsmolecules//cali-timer/cali-timer.html">
 
-	<custom-style>
-		<style>
-			gdq-runner-nameplate {
-				top: 493px;
-				width: 349px;
-			}
+  <custom-style>
+    <style>
+      #background {
+        -webkit-mask-image: url(img/backgrounds/gameboy_2_mask.svg);
+        mask-image: url(img/backgrounds/gameboy_2_mask.svg);
+      }
 
-			gdq-runner-nameplate:nth-of-type(1) {
-				right: 855px;
-			}
+      #info {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        width: 470px;
+        height: 147px;
 
-			gdq-runner-nameplate:nth-of-type(2) {
-				left: 855px;
-			}
+        display: flex;
+        flex-direction: column;
+      }
 
-			gdq-runinfo {
-				bottom: 38px;
-				width: 425px;
-				height: 100px;
-				--gdq-runinfo-misc-height: 29px;
-			}
+      cali-nameplate {
+        position: absolute;
+        top: 478px;
+        width: 365px;
+        font-size: 28px;
+      }
 
-			gdq-timer {
-				left: 0;
-				bottom: 0;
-				height: 38px;
-				width: 425px;
-				font-size: 33px;
-				--gdq-timer-voffset: -2px;
-			}
+      cali-nameplate[index="0"] {
+        left: 105px;
+      }
 
-			gdq-tweet {
-				bottom: 0;
-				right: 0;
-				width: 426px;
-				height: 180px;
-				padding-right: 12px;
+      cali-nameplate[index="1"] {
+        right: 105px;
+      }
 
-				--gdq-tweet-body: {
-					font-size: 25px;
-					padding-top: 50px;
-				};
-			}
+      cali-finish-time {
+        position: absolute;
+        bottom: 189px;
+        width: 353px;
+        font-size: 32px;
+      }
 
-			gdq-sponsors {
-				bottom: 0;
-				right: 0;
-				width: 426px;
-				height: 140px;
-				padding-right: 12px;
-			}
-		</style>
-	</custom-style>
+      cali-finish-time[index="0"] {
+        left: 111px;
+      }
+
+      cali-finish-time[index="1"] {
+        right: 111px;
+      }
+
+      cali-nameplate[index="0"],
+      cali-finish-time[index="0"] {
+        --name-color: var(--runner-1-color-1);
+        --time-color: var(--runner-1-color-2);
+      }
+
+      cali-nameplate[index="1"],
+      cali-finish-time[index="1"] {
+        --name-color: var(--runner-2-color-1);
+        --time-color: var(--runner-2-color-2);
+      }
+
+      cali-run-info {
+        font-size: 28px;
+
+        --run-primary-color: var(--info-color-1);
+        --run-secondary-color: var(--info-color-2);
+      }
+
+      cali-timer {
+        flex: 1;
+
+        font-weight: 800;
+        font-size: 38px;
+
+        --timer-primary-color: var(--info-color-1);
+        --timer-secondary-color: var(--info-color-2);
+      }
+
+      cali-sponsors {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        width: 470px;
+        height: 147px;
+        padding: 25px;
+      }
+    </style>
+  </custom-style>
 </head>
 <body>
-	<div id="container">
-		<img id="addon" src="img/backgrounds/gb2_addon.png">
-		<img id="background" src="img/backgrounds/standard_2_bg.png">
-		<gdq-runinfo max-name-size="28" force-single-line-name></gdq-runinfo>
-		<gdq-timer></gdq-timer>
-		<gdq-sponsors></gdq-sponsors>
-		<gdq-tweet></gdq-tweet>
-		<gdq-runner-nameplate index="0" attach-right></gdq-runner-nameplate>
-		<gdq-runner-nameplate index="1" attach-left></gdq-runner-nameplate>
-		<img id="foreground" src="img/backgrounds/standard_2_fg.png">
-	</div>
+  <div id="container">
+    <div id="background">
+      <div id="background-image" style="background-image: url('img/backgrounds/Catalina Island.png')"></div>
+      <div id="background-overlay"></div>
+    </div>
+    <div id="main-area">
+      <div id="info">
+        <cali-timer></cali-timer>
+        <cali-run-info></cali-run-info>
+      </div>
+      <cali-nameplate index="0"></cali-nameplate>
+      <cali-nameplate index="1" right></cali-nameplate>
+      <cali-finish-time index="0" attach="bottom"></cali-finish-time>
+      <cali-finish-time index="1" attach="bottom" reverse></cali-finish-time>
+      <cali-sponsors></cali-sponsors>
+    </div>
+  </div>
 
-	<script>
-		window.addEventListener('DOMContentLoaded', () => {
-			TweenLite.to(document.body, 0.333, {
-				opacity: 1,
-				ease: Power1.easeOut
-			});
-		});
-	</script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      TweenLite.to(document.body, 0.333, {
+        opacity: 1,
+        ease: Power1.easeOut,
+      });
+    });
+  </script>
 </body>
 </html>

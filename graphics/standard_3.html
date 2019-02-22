@@ -1,156 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Standard, 3 Player</title>
-	<link rel="stylesheet" href="style/layout.css">
-	<link rel="import" href="../shared/imports/gsap.html">
-	<link rel="import" href="elements/molecules/gdq-runner-nameplate/gdq-runner-nameplate.html">
-	<link rel="import" href="elements/molecules/gdq-runinfo/gdq-runinfo.html">
-	<link rel="import" href="elements/molecules/gdq-timer/gdq-timer.html">
-	<link rel="import" href="elements/molecules/gdq-tweet/gdq-tweet.html">
-	<link rel="import" href="elements/molecules/gdq-sponsors/gdq-sponsors.html">
-	<link rel="import" href="elements/atoms/atom-tronlines/atom-tronlines.html">
-	<link rel="import" href="elements/atoms/atom-gridlines/atom-gridlines.html">
-	<custom-style>
-		<style>
-			#lineone {
-				width: 474px;
-				height: 845px;
-				left: 563px;
-				border-left: 1px solid #00ffff;
-				border-right: 1px solid #00ffff;
-			}
+  <meta charset="UTF-8">
+  <title>Standard, 3 Player</title>
+  <link rel="stylesheet" href="style/layout.css">
+  <link rel="import" href="../shared/imports/gsap.html">
+  <link rel="import" href="elements/molecules/cali-finish-time/cali-finish-time.html">
+  <link rel="import" href="elements/molecules/cali-nameplate/cali-nameplate.html">
+  <link rel="import" href="elements/molecules/cali-run-info/cali-run-info.html">
+  <link rel="import" href="elements/molecules/cali-sponsors/cali-sponsors.html">
+  <link rel="import" href="elements/molecules/cali-timer/cali-timer.html">
 
-			#linetwo, #linethree {
-				width: 563px;
-				height: 423px;
-				border-bottom: 1px solid #00ffff;
-				top: 0;
-			}
+  <custom-style>
+    <style>
+      #background {
+        -webkit-mask-image: url(img/backgrounds/standard_3_mask.svg);
+        mask-image: url(img/backgrounds/standard_3_mask.svg);
+      }
 
-			#linetwo {
-				left: 0;
-			}
+      #middle, cali-sponsors {
+        position: absolute;
+        left: 437px;
+        right: 437px;
+      }
 
-			#linethree {
-				right: 0;
-			}
+      #middle {
+        display: flex;
+        flex-direction: column;
+        top: 0px;
+      }
 
-			#cover {
-				position: absolute;
-				width: 474px;
-				height: 81px;
-				top: 121px;
-				left: 563px;
-				background-color: #051113;
-			}
+      .game, #webcam {
+        position: absolute;
+        width: 437px;
+        height: 5px;
+        background-color: var(--name-color);
+      }
 
-			.line {
-				position: absolute;
-				box-sizing: border-box;
-			}
+      .game[index="0"],
+      .game[index="2"] {
+        left: 0;
+      }
 
-			gdq-runner-nameplate {
-				width: 360px;
-			}
+      .game[index="1"],
+      #webcam {
+        right: 0;
+      }
 
-			gdq-runner-nameplate:nth-of-type(1) {
-				top: 290px;
-				left: 563px;
-			}
+      .game[index="0"],
+      .game[index="1"] {
+        top: 328px;
+      }
 
-			gdq-runner-nameplate:nth-of-type(2) {
-				top: 365px;
-				right: 563px;
-			}
+      .game[index="2"],
+      #webcam {
+        top: 661px;
+      }
 
-			gdq-runner-nameplate:nth-of-type(3) {
-				top: 440px;
-				left: 563px;
-			}
+      cali-nameplate {
+        position: absolute;
+        width: 391px;
+        font-size: 28px;
+      }
 
-			gdq-runinfo {
-				left: 563px;
-				top: 0;
-				width: 474px;
-				height: 180px;
-				--gdq-runinfo-misc-height: 47px;
-				--gdq-runinfo-name-padding: 8px 16px;
-			}
+      cali-nameplate[index="0"],
+      cali-nameplate[index="2"] {
+        left: 437px;
+      }
 
-			gdq-timer {
-				left: 573px;
-				top: 202px;
-				height: 60px;
-				width: 454px;
-				--gdq-timer-voffset: -2px;
-				font-size: 56px;
-			}
+      cali-nameplate[index="1"] {
+        right: 437px;
+      }
 
-			gdq-tweet {
-				--gdq-tweet-name-font-size: 16px;
-				--gdq-tweet-body: {
-					font-size: 18px;
-				};
-			}
+      cali-finish-time {
+        position: absolute;
+        width: 222px;
+        height: 1.5em;
+        font-size: 28px;
+      }
 
-			gdq-sponsors {
-				border: 1px solid #FF0099;
-				box-sizing: border-box;
-				box-shadow: inset 0 0 10px rgba(255, 0, 214, 0.66);
-			}
+      cali-finish-time[index="0"],
+      cali-finish-time[index="2"] {
+        left: 215px;
+      }
 
-			gdq-tweet,
-			gdq-sponsors {
-				bottom: 15px;
-				left: 573px;
-				width: 454px;
-				height: 315px;
-			}
+      cali-finish-time[index="1"] {
+        right: 215px;
+      }
 
-			atom-gridlines {
-				position: absolute;
-				width: 474px;
-				height: 121px;
-				top: 0;
-				left: 563px;
-			}
+      cali-nameplate[index="0"],
+      cali-finish-time[index="0"] {
+        top: 195px;
+      }
 
-			atom-tronlines {
-				position: absolute;
-				bottom: 0;
-				left: 563px;
-			}
-		</style>
-	</custom-style>
+      cali-nameplate[index="1"],
+      cali-finish-time[index="1"] {
+        top: 264px;
+      }
+
+      cali-nameplate[index="2"],
+      cali-finish-time[index="2"] {
+        top: 333px;
+      }
+
+
+      cali-nameplate[index="0"],
+      cali-finish-time[index="0"],
+      .game[index="0"] {
+        --name-color: var(--runner-1-color-1);
+        --time-color: var(--runner-1-color-2);
+      }
+
+      cali-nameplate[index="1"],
+      cali-finish-time[index="1"],
+      .game[index="1"] {
+        --name-color: var(--runner-2-color-1);
+        --time-color: var(--runner-2-color-2);
+      }
+
+      cali-nameplate[index="2"],
+      cali-finish-time[index="2"],
+      .game[index="2"] {
+        --name-color: var(--runner-3-color-1);
+        --time-color: var(--runner-3-color-2);
+      }
+
+      #webcam {
+        --name-color: var(--info-color-1);
+      }
+
+      cali-run-info {
+        font-size: 28px;
+
+        --run-primary-color: var(--info-color-1);
+        --run-secondary-color: var(--info-color-2);
+      }
+
+      cali-timer {
+        font-weight: 800;
+        font-size: 54px;
+
+        --timer-primary-color: var(--info-color-1);
+        --timer-secondary-color: var(--info-color-2);
+      }
+
+      cali-sponsors {
+        bottom: 0px;
+        height: 265px;
+        padding: 25px;
+      }
+    </style>
+  </custom-style>
 </head>
 <body>
-	<div id="container">
-		<atom-gridlines></atom-gridlines>
-		<atom-tronlines width="474" height="643"></atom-tronlines>
-		<div id="cover"></div>
+  <div id="container">
+    <div id="background">
+      <div id="background-image" style="background-image: url('img/backgrounds/La Jolla.png')"></div>
+      <div id="background-overlay"></div>
+    </div>
+    <div id="main-area">
+      <div id="middle">
+        <cali-run-info></cali-run-info>
+        <cali-timer></cali-timer>
+      </div>
+      <cali-nameplate index="0" right></cali-nameplate>
+      <cali-nameplate index="1" right></cali-nameplate>
+      <cali-nameplate index="2" right></cali-nameplate>
+      <cali-finish-time index="0" attach="right" reverse></cali-finish-time>
+      <cali-finish-time index="1" attach="left"></cali-finish-time>
+      <cali-finish-time index="2" attach="right" reverse></cali-finish-time>
+      <div class="game" index="0"></div>
+      <div class="game" index="1"></div>
+      <div class="game" index="2"></div>
+      <div id="webcam"></div>
+      <cali-sponsors></cali-sponsors>
+    </div>
+  </div>
 
-		<gdq-runinfo></gdq-runinfo>
-		<gdq-timer></gdq-timer>
-		<gdq-sponsors></gdq-sponsors>
-		<gdq-tweet></gdq-tweet>
-		<gdq-runner-nameplate index="0" no-left-cap result-side="left" audio-vert-pos="bottom" audio-horiz-pos="left"></gdq-runner-nameplate>
-		<gdq-runner-nameplate index="1" no-right-cap result-side="right" audio-vert-pos="bottom" audio-horiz-pos="right"></gdq-runner-nameplate>
-		<gdq-runner-nameplate index="2" no-left-cap result-side="left" audio-vert-pos="bottom"  audio-horiz-pos="left"></gdq-runner-nameplate>
-
-		<div id="lineone" class="line"></div>
-		<div id="linetwo" class="line"></div>
-		<div id="linethree" class="line"></div>
-	</div>
-
-	<script>
-		window.addEventListener('DOMContentLoaded', () => {
-			TweenLite.to(document.body, 0.333, {
-				opacity: 1,
-				ease: Power1.easeOut
-			});
-		});
-	</script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      TweenLite.to(document.body, 0.333, {
+        opacity: 1,
+        ease: Power1.easeOut,
+      });
+    });
+  </script>
 </body>
 </html>

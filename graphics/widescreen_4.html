@@ -1,140 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Widescreen, 4 Player</title>
-	<link rel="stylesheet" href="style/layout.css">
-	<link rel="import" href="../shared/imports/gsap.html">
-	<link rel="import" href="elements/molecules/gdq-runner-nameplate/gdq-runner-nameplate.html">
-	<link rel="import" href="elements/molecules/gdq-runinfo/gdq-runinfo.html">
-	<link rel="import" href="elements/molecules/gdq-timer/gdq-timer.html">
-	<link rel="import" href="elements/molecules/gdq-tweet/gdq-tweet.html">
-	<link rel="import" href="elements/molecules/gdq-sponsors/gdq-sponsors.html">
-	<link rel="import" href="elements/atoms/atom-tronlines/atom-tronlines.html">
-	<link rel="import" href="elements/atoms/atom-gridlines/atom-gridlines.html">
-	<custom-style>
-		<style>
-			#lineone {
-				position: absolute;
-				box-sizing: border-box;
-				width: 344px;
-				height: 845px;
-				left: 628px;
-				border-left: 1px solid #00ffff;
-				border-right: 1px solid #00ffff;
-			}
+  <meta charset="UTF-8">
+  <title>Widescreen, 4 Player</title>
+  <link rel="stylesheet" href="style/layout.css">
+  <link rel="import" href="../shared/imports/gsap.html">
+  <link rel="import" href="elements/molecules/cali-finish-time/cali-finish-time.html">
+  <link rel="import" href="elements/molecules/cali-nameplate/cali-nameplate.html">
+  <link rel="import" href="elements/molecules/cali-run-info/cali-run-info.html">
+  <link rel="import" href="elements/molecules/cali-sponsors/cali-sponsors.html">
+  <link rel="import" href="elements/molecules/cali-timer/cali-timer.html">
 
-			#leftPlate {
-				left: 0;
-				@apply --layout-end;
-			}
+  <custom-style>
+    <style>
+      #background {
+        -webkit-mask-image: url(img/backgrounds/widescreen_4_mask.svg);
+        mask-image: url(img/backgrounds/widescreen_4_mask.svg);
+      }
 
-			#leftPlate > gdq-runner-nameplate {
-				margin-right: -1px;
-			}
+      #middle {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 262px;
+        left: 421px;
+        right: 421px;
+        bottom: 262px;
+      }
 
-			#rightPlate {
-				right: 0;
-			}
+      cali-nameplate {
+        position: absolute;
+        width: 421px;
+        font-size: 28px;
+      }
 
-			#rightPlate > gdq-runner-nameplate {
-				margin-left: -1px;
-			}
+      cali-nameplate[index="0"],
+      cali-nameplate[index="2"] {
+        left: 0px;
+      }
 
-			.plate {
-				background-color: #051113;
-				border-top: 1px solid #00ffff;
-				border-bottom: 1px solid #00ffff;
-				position: absolute;
-				height: 137px;
-				width: 628px;
-				top: 353px;
-				@apply --layout-vertical;
-				@apply --layout-justified;
-			}
+      cali-nameplate[index="1"],
+      cali-nameplate[index="3"] {
+        right: 0px;
+      }
 
-			.plate > :first-child {
-				margin-top: -1px;
-			}
+      cali-nameplate[index="0"],
+      cali-nameplate[index="1"] {
+        top: 262px;
+      }
 
-			.plate > :last-child {
-				margin-bottom: -1px;
-			}
+      cali-nameplate[index="2"],
+      cali-nameplate[index="3"] {
+        bottom: 262px;
+      }
 
-			gdq-runner-nameplate {
-				position: relative;
-				width: 450px;
-			}
+      cali-finish-time {
+        position: absolute;
+        width: 409px;
+        font-size: 28px;
+      }
 
-			gdq-runinfo {
-				left: 628px;
-				top: 240px;
-				width: 344px;
-				height: 196px;
-				--gdq-runinfo-name-padding: 8px 16px;
-				--gdq-runinfo-misc-height: 45px;
-			}
+      cali-finish-time[index="0"],
+      cali-finish-time[index="2"] {
+        left: 6px;
+      }
 
-			gdq-timer {
-				left: 628px;
-				top: 475px;
-				height: 81px;
-				width: 344px;
-				font-size: 56px;
-			}
+      cali-finish-time[index="1"],
+      cali-finish-time[index="3"] {
+        right: 6px;
+      }
 
-			atom-tronlines {
-				position: absolute;
-				left: 629px;
-			}
+      cali-finish-time[index="0"],
+      cali-finish-time[index="1"] {
+        bottom: 405px;
+      }
 
-			atom-tronlines:nth-of-type(1) {
-				top: 384px;
-			}
+      cali-finish-time[index="2"],
+      cali-finish-time[index="3"] {
+        top: 405px;
+      }
 
-			atom-tronlines:nth-of-type(2) {
-				top: 556px;
-				border-bottom: 1px solid #00ffff;
-			}
+      cali-nameplate[index="0"],
+      cali-finish-time[index="0"] {
+        --name-color: var(--runner-1-color-1);
+        --time-color: var(--runner-1-color-2);
+      }
 
-			atom-gridlines {
-				position: absolute;
-				top: 240px;
-				left: 629px;
-				height: 145px;
-				width: 342px;
-				border-top: 1px solid #00ffff;
-			}
-		</style>
-	</custom-style>
+      cali-nameplate[index="1"],
+      cali-finish-time[index="1"] {
+        --name-color: var(--runner-2-color-1);
+        --time-color: var(--runner-2-color-2);
+      }
+
+      cali-nameplate[index="2"],
+      cali-finish-time[index="2"] {
+        --name-color: var(--runner-3-color-1);
+        --time-color: var(--runner-3-color-2);
+      }
+
+      cali-nameplate[index="3"],
+      cali-finish-time[index="3"] {
+        --name-color: var(--runner-4-color-1);
+        --time-color: var(--runner-4-color-1);
+      }
+
+      cali-run-info {
+        font-size: 28px;
+
+        --run-primary-color: var(--info-color-1);
+        --run-secondary-color: var(--info-color-2);
+      }
+
+      cali-timer {
+        flex: 1;
+        font-weight: 800;
+        font-size: 36px;
+
+        --timer-primary-color: var(--info-color-1);
+        --timer-secondary-color: var(--info-color-2);
+      }
+
+      cali-sponsors {
+        position: absolute;
+        left: 465px;
+        right: 465px;
+        bottom: 0px;
+        height: 262px;
+        padding: 25px;
+      }
+    </style>
+  </custom-style>
 </head>
 <body>
-	<div id="container">
-		<div id="leftPlate" class="plate">
-			<gdq-runner-nameplate index="0" no-right-cap result-side="left" audio-vert-pos="bottom" audio-horiz-pos="right"></gdq-runner-nameplate>
-			<gdq-runner-nameplate index="2" no-right-cap result-side="left" audio-vert-pos="top" audio-horiz-pos="right"></gdq-runner-nameplate>
-		</div>
+  <div id="container">
+    <div id="background">
+      <div id="background-image" style="background-image: url('img/backgrounds/SF Bay.jpg')"></div>
+      <div id="background-overlay"></div>
+    </div>
+    <div id="main-area">
+      <div id="middle">
+        <cali-timer></cali-timer>
+        <cali-run-info></cali-run-info>
+      </div>
+      <cali-nameplate index="0"></cali-nameplate>
+      <cali-nameplate index="1" right></cali-nameplate>
+      <cali-nameplate index="2"></cali-nameplate>
+      <cali-nameplate index="3" right></cali-nameplate>
+      <cali-finish-time index="0" attach="bottom"></cali-finish-time>
+      <cali-finish-time index="1" attach="bottom" reverse></cali-finish-time>
+      <cali-finish-time index="2" attach="top"></cali-finish-time>
+      <cali-finish-time index="3" attach="top" reverse></cali-finish-time>
+      <cali-sponsors></cali-sponsors>
+    </div>
+  </div>
 
-		<div id="rightPlate" class="plate">
-			<gdq-runner-nameplate index="1" no-left-cap result-side="right" audio-vert-pos="bottom" audio-horiz-pos="left"></gdq-runner-nameplate>
-			<gdq-runner-nameplate index="3" no-left-cap result-side="right" audio-vert-pos="top" audio-horiz-pos="left"></gdq-runner-nameplate>
-		</div>
-
-		<atom-gridlines></atom-gridlines>
-		<atom-tronlines direction="down" width="342" height="102"></atom-tronlines>
-		<atom-tronlines width="342" height="49"></atom-tronlines>
-		<div id="lineone"></div>
-		<gdq-runinfo></gdq-runinfo>
-		<gdq-timer></gdq-timer>
-	</div>
-
-	<script>
-		window.addEventListener('DOMContentLoaded', () => {
-			TweenLite.to(document.body, 0.333, {
-				opacity: 1,
-				ease: Power1.easeOut
-			});
-		});
-	</script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      TweenLite.to(document.body, 0.333, {
+        opacity: 1,
+        ease: Power1.easeOut,
+      });
+    });
+  </script>
 </body>
 </html>

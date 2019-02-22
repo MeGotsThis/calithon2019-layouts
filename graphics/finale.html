@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Finale</title>
+  <link rel="stylesheet" href="style/layout.css">
+  <link rel="import" href="../shared/imports/gsap.html">
+
+  <custom-style>
+    <style>
+      #container {
+        height: 720px;
+      }
+
+      #logo {
+        position: absolute;
+        top: 180px;
+        left: 0;
+        width: 1280px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #logo img {
+        width: 408px;
+      }
+
+      #thanks-soon {
+        position: absolute;
+        top: 320px;
+        left: 380px;
+        width: 520px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        font-size: 42px;
+        color: white;
+        text-align: center;
+      }
+
+      #thanks {
+        background-color: var(--blue-1);
+      }
+
+      #soon {
+        background-color: var(--blue-2);
+      }
+
+      #thanks-soon-bar {
+        height: 5px;
+        background-color: var(--blue-1);
+      }
+
+      #music-section {
+        position: absolute;
+        top: 471px;
+        left: 270px;
+        width: 740px;
+
+        color: white;
+        font-size: 36px;
+
+        display: flex;
+        flex-direction: column;
+      }
+
+      #music {
+        width: 100%;
+        height: 1.5em;
+
+        background-color: var(--teal-2);
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+
+      #note {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 1.5em;
+        height: 1.5em;
+      }
+
+      #note img {
+        width: 50%;
+        height: 50%;
+      }
+
+      #nowPlayingPadding {
+        flex: 1;
+        min-width: 0;
+        padding: 0 0.2em 0 0;
+      }
+
+      #nowPlaying {
+        white-space: nowrap;
+        transform-origin: left;
+      }
+
+      #music-bar {
+        height: 5px;
+        background-color: var(--teal-1);
+      }
+    </style>
+  </custom-style>
+</head>
+<body>
+<div id="container">
+  <div id="background">
+    <div id="background-image" style="background-image: url('img/backgrounds/Catalina Island.png')"></div>
+    <div id="background-overlay"></div>
+  </div>
+  <div id="logo">
+    <img src="img/logo/marathon-logo.png"></img>
+  </div>
+  <div id="thanks-soon">
+    <div id="thanks">Thanks for watching!</div>
+    <div id="soon">See you dudes soon!</div>
+    <div id="thanks-soon-bar"></div>
+  </div>
+  <div id="music-section">
+    <div id="music">
+      <div id="note">
+        <img src="img/note.svg"></img>
+      </div>
+      <div id="nowPlayingPadding">
+        <div id="nowPlaying"></div>
+      </div>
+    </div>
+    <div id="music-bar"></div>
+  </div>
+</div>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    TweenLite.to(document.body, 0.333, {
+      opacity: 1,
+      ease: Power1.easeOut,
+    });
+  });
+</script>
+
+<script src="app/finale.js"></script>
+</body>
+</html>

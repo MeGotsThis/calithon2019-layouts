@@ -1,0 +1,125 @@
+<link rel="import" href="../../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../../shared/style/gdq-text-styles.html">
+
+<dom-module id="cali-nameplate">
+  <template>
+    <style include="gdq-text-styles">
+      :host {
+        text-transform: uppercase;
+        color: white;
+      }
+
+      #layout {
+        position: relative;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        white-space: nowrap;
+
+        background-color: var(--name-color);
+      }
+
+      #placeholder {
+        visibility: hidden;
+        overflow: hidden;
+        min-height: var(--icon-height, 1.5em);
+      }
+
+      #names {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+      }
+
+      #namesName, #namesTwitch  {
+        box-sizing: border-box;
+        width: 100%;
+        @apply --layout-horizontal;
+        @apply --layout-center;
+      }
+
+      :host([right]) #namesName,
+      :host([right]) #namesTwitch {
+        @apply --layout-horizontal-reverse;
+      }
+
+      .left {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        height: 100%;
+
+        background-color: rgba(9, 53, 71, 0.4);
+      }
+
+      .glitch {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: var(--icon-width, 1.5em);
+        height: var(--icon-height, 1.5em);
+      }
+
+      .glitch img {
+        width: 50%;
+        height: 50%;
+      }
+
+      .name-pad {
+        flex: 1;
+        min-width: 0;
+        padding: 0 0.5em;
+      }
+
+      #name, #twitch {
+        transform-origin: left;
+      }
+
+      :host([right]) #name,
+      :host([right]) #twitch {
+        text-align: right;
+      }
+
+      .hidden {
+        position: absolute;
+        visibility: hidden;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+
+    <div id="layout">
+      <div id="placeholder">
+        M
+      </div>
+      <div id="names">
+        <div id="namesName">
+          <div class="left">
+            <div class="glitch"></div>
+          </div>
+          <span class="name-pad">
+            <div id="name">[[name]]</div>
+          </span>
+        </div>
+        <div id="namesTwitch">
+          <div class="left">
+            <div class="glitch"><img src="[[importPath]]/../../../../img/twitch_white.svg" /></div>
+          </div>
+          <span class="name-pad">
+            <div id="twitch">[[twitch]]</div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script src="cali-nameplate.js"></script>
+</dom-module>

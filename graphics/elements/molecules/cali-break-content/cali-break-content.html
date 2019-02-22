@@ -1,0 +1,112 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../../shared/imports/constants.html">
+<link rel="import" href="../../../../shared/style/gdq-text-styles.html">
+
+<dom-module id="cali-break-content">
+  <template>
+    <style include="gdq-text-styles">
+      :host {
+        color: white;
+      }
+
+      #body {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .text-holder {
+        visibility: hidden;
+      }
+
+      #row-1 {
+        position: relative;
+        background-color: var(--color-1);
+      }
+
+      #row-1-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+      }
+
+      #label-background {
+        background-color: rgba(9, 53, 71, 0.4);
+        width: 33.333%;
+        text-align: center;
+      }
+
+      #label {
+        text-align: center;
+      }
+
+      #title-outer {
+        flex: 1;
+        overflow: hidden;
+        padding: 0 0.4em;
+        min-width: 1px;
+      }
+
+      #title {
+        white-space: nowrap;
+        will-change: transform;
+      }
+
+      #row-2 {
+        position: relative;
+        background-color: var(--color-2);
+      }
+
+      #content-outer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        z-index: 1;
+        overflow: hidden;
+        padding: 0 0.4em;
+        @apply --layout-flex;
+      }
+
+      #content {
+        width: 100%;
+        white-space: nowrap;
+        will-change: transform;
+        flex-grow: 1;
+        flex-shrink: 0;
+        @apply --layout-horizontal;
+      }
+
+      #bar {
+        height: 5px;
+        background-color: var(--color-1);
+      }
+    </style>
+
+    <div id="body">
+      <div id="row-1">
+        <span class="text-holder">Text holder</span>
+        <div id="row-1-content">
+          <div id="label-background"><div id="label-outer"><div id="label"></div></div></div>
+          <div id="title-outer"><div id="title"></div></div>
+        </div>
+      </div>
+      <div id="row-2">
+        <span class="text-holder">Text holder</span>
+        <div id="content-outer"><div id="content"></div></div>
+      </div>
+      <div id="bar">
+      </div>
+    </div>
+  </template>
+
+  <script src="cali-break-content.js"></script>
+</dom-module>

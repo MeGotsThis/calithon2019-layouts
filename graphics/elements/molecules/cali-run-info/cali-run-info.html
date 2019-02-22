@@ -1,0 +1,72 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../../shared/style/gdq-text-styles.html">
+<link rel="import" href="../../atoms/cali-category/cali-category.html">
+<link rel="import" href="../../atoms/cali-estimate/cali-estimate.html">
+<link rel="import" href="../../atoms/cali-game/cali-game.html">
+
+<dom-module id="cali-run-info">
+  <template>
+    <style include="gdq-text-styles">
+      :host {
+        color: white;
+      }
+
+      #layout {
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        box-sizing: border-box;
+      }
+
+      #row-2 {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        background-color: var(--run-secondary-color);
+      }
+
+      #row-3 {
+        height: 5px;
+        background-color: var(--run-primary-color);
+      }
+
+      cali-game {
+        flex: 1;
+        background-color: var(--run-primary-color);
+      }
+
+      cali-estimate {
+        height: 100%;
+      }
+
+      #padding {
+        padding: 0 0.5em;
+      }
+
+      cali-category {
+        min-width: 0;
+        flex: 1;
+        text-align: right;
+      }
+
+      #right {
+        padding: 0 0.1em;
+      }
+    </style>
+    <div id="layout">
+      <cali-game></cali-game>
+      <div id="row-2">
+        <cali-estimate></cali-estimate>
+        <div id="padding"></div>
+        <cali-category></cali-category>
+        <div id="right"></div>
+      </div>
+      <div id="row-3"></div>
+    </div>
+  </template>
+
+  <script src="cali-run-info.js"></script>
+</dom-module>

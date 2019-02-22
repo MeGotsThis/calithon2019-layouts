@@ -1,81 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>DS, 1 Player</title>
-	<link rel="stylesheet" href="style/layout.css">
-	<link rel="import" href="../shared/imports/gsap.html">
-	<link rel="import" href="elements/molecules/gdq-runner-nameplate/gdq-runner-nameplate.html">
-	<link rel="import" href="elements/molecules/gdq-runinfo/gdq-runinfo.html">
-	<link rel="import" href="elements/molecules/gdq-timer/gdq-timer.html">
-	<link rel="import" href="elements/molecules/gdq-tweet/gdq-tweet.html">
-	<link rel="import" href="elements/molecules/gdq-sponsors/gdq-sponsors.html">
-	<link rel="import" href="elements/atoms/atom-tronlines/atom-tronlines.html">
-	<link rel="import" href="elements/atoms/atom-gridlines/atom-gridlines.html">
-	<custom-style>
-		<style>
-			gdq-runner-nameplate {
-				bottom: 5px;
-				left: 10px;
-				z-index: 11;
-				width: 454px;
-			}
+  <meta charset="UTF-8">
+  <title>DS, 1 Player</title>
+  <link rel="stylesheet" href="style/layout.css">
+  <link rel="import" href="../shared/imports/gsap.html">
+  <link rel="import" href="elements/molecules/cali-nameplate/cali-nameplate.html">
+  <link rel="import" href="elements/molecules/cali-run-info/cali-run-info.html">
+  <link rel="import" href="elements/molecules/cali-timer/cali-timer.html">
 
-			gdq-runinfo {
-				left: 0;
-				top: 355px;
-				width: 474px;
-				height: 140px;
-				--gdq-runinfo-name-padding: 0 16px;
-				--gdq-runinfo-misc-height: 45px;
-			}
+  <custom-style>
+    <style>
+      #background {
+        -webkit-mask-image: url(img/backgrounds/ds_mask.svg);
+        mask-image: url(img/backgrounds/ds_mask.svg);
+      }
 
-			gdq-timer {
-				left: 10px;
-				bottom: 290px;
-				height: 47px;
-				width: 454px;
-				font-size: 42px;
-				--gdq-timer-voffset: -2px;
-			}
+      #left {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 247px;
+        left: 0px;
+        width: 391px;
+      }
 
-			#lineone {
-				width: 474px;
-				height: 845px;
-				position: absolute;
-				top: 0;
-				left: 0;
-				border-right: 1px solid #00ffff;
-			}
+      cali-nameplate {
+        font-size: 28px;
 
-			atom-gridlines {
-				position: absolute;
-				top: 355px;
-				left: 0;
-				width: 474px;
-				height: 160px;
-				border-bottom: 1px solid #00ffff;
-				border-top: 1px solid #00ffff;
-			}
-		</style>
-	</custom-style>
+        --name-color: var(--info-color-1);
+      }
+
+      cali-timer {
+        font-weight: 800;
+        font-size: 40px;
+
+        --timer-primary-color: var(--info-color-1);
+        --timer-secondary-color: var(--info-color-2);
+      }
+
+      cali-run-info {
+        font-size: 28px;
+
+        --run-primary-color: var(--runner-1-color-1);
+        --run-secondary-color: var(--runner-1-color-2);
+      }
+    </style>
+  </custom-style>
 </head>
 <body>
-	<div id="container">
-		<atom-gridlines></atom-gridlines>
-		<div id="lineone"></div>
-		<gdq-runinfo max-name-size="24"></gdq-runinfo>
-		<gdq-timer></gdq-timer>
-		<gdq-runner-nameplate index="0" no-audio></gdq-runner-nameplate>
-	</div>
+  <div id="container">
+    <div id="background">
+      <div id="background-image" style="background-image: url('img/backgrounds/Oceanside Pier View.png')"></div>
+      <div id="background-overlay"></div>
+    </div>
+    <div id="main-area">
+      <div id="left">
+        <cali-nameplate index="0"></cali-nameplate>
+        <cali-timer></cali-timer>
+        <cali-run-info></cali-run-info>
+      </div>
+    </div>
+  </div>
 
-	<script>
-		window.addEventListener('DOMContentLoaded', () => {
-			TweenLite.to(document.body, 0.333, {
-				opacity: 1,
-				ease: Power1.easeOut
-			});
-		});
-	</script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      TweenLite.to(document.body, 0.333, {
+        opacity: 1,
+        ease: Power1.easeOut,
+      });
+    });
+  </script>
 </body>
 </html>

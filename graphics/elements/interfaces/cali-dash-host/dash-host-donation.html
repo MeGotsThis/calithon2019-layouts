@@ -1,0 +1,63 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="dash-host-styles.html">
+
+<dom-module id="dash-host-donation">
+  <template>
+    <style include="dash-host-styles">
+      :host {
+        display: block;
+        font-size: 20px;
+        padding-bottom: 10px;
+        @apply --layout-flex-none;
+      }
+
+      :host(:first-of-type) {
+        padding-top: 4px;
+      }
+
+      :host(:last-of-type) {
+        padding-bottom: 4px;
+      }
+
+      #material {
+        padding: 12px;
+        @apply --layout-vertical;
+        @apply --layout-justified;
+      }
+
+      :host([read]) #material {
+        background-color: #d2d2d2;
+      }
+
+      #header {
+        @apply --layout-horizontal;
+        @apply --layout-justified;
+        font-weight: 500;
+      }
+
+      #name {
+        word-wrap: nowrap;
+        min-width: 1px;
+        @apply --layout-flex;
+      }
+
+      #amount {
+        margin-left: 16px;
+        text-align: right;
+        @apply --layout-flex-none;
+      }
+    </style>
+
+    <div id="material" class="material stroked" on-click="toggleRead">
+      <div id="header">
+        <div id="name">[[donation.name]]</div>
+        <div id="amount">[[donation.amount]]</div>
+      </div>
+      <div id="comment">
+        [[donation.comment]]
+      </div>
+    </div>
+  </template>
+
+  <script src="dash-host-donation.js"></script>
+</dom-module>

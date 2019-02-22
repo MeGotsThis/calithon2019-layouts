@@ -98,22 +98,7 @@
     ],
     "graphics": [
       {
-        "file": "interview_monitor.html",
-        "width": 1920,
-        "height": 1080
-      },
-      {
-        "file": "interview_dashboard.html",
-        "width": 1920,
-        "height": 1080
-      },
-      {
         "file": "countdown.html",
-        "width": 1600,
-        "height": 900
-      },
-      {
-        "file": "countdown-foreground-anim.html",
         "width": 1600,
         "height": 900
       },
@@ -121,16 +106,6 @@
         "file": "break.html",
         "width": 1600,
         "height": 900
-      },
-      {
-        "file": "transition.html",
-        "width": 1600,
-        "height": 900
-      },
-      {
-        "file": "interview.html",
-        "width": 1600,
-        "height": 845
       },
       {
         "file": "standard_1.html",
@@ -163,32 +138,12 @@
         "height": 845
       },
       {
-        "file": "widescreen_2_mario.html",
-        "width": 1600,
-        "height": 845
-      },
-      {
         "file": "widescreen_4.html",
         "width": 1600,
         "height": 845
       },
       {
-        "file": "widescreen_4_2.html",
-        "width": 1600,
-        "height": 845
-      },
-      {
         "file": "gba_1.html",
-        "width": 1600,
-        "height": 845
-      },
-      {
-        "file": "gba_2.html",
-        "width": 1600,
-        "height": 845
-      },
-      {
-        "file": "gba_4.html",
         "width": 1600,
         "height": 845
       },
@@ -203,27 +158,12 @@
         "height": 845
       },
       {
-        "file": "gameboy_3.html",
-        "width": 1600,
-        "height": 845
-      },
-      {
-        "file": "gameboy_4.html",
-        "width": 1600,
-        "height": 845
-      },
-      {
         "file": "3ds.html",
         "width": 1600,
         "height": 845
       },
       {
         "file": "ds.html",
-        "width": 1600,
-        "height": 845
-      },
-      {
-        "file": "ds_vertical.html",
         "width": 1600,
         "height": 845
       },
@@ -246,36 +186,6 @@
         "file": "audio_dashboard.html",
         "width": 1920,
         "height": 1080
-      },
-      {
-        "file": "producer_dashboard.html",
-        "width": 1920,
-        "height": 1080
-      },
-      {
-        "file": "oot_bingo.html",
-        "width": 474,
-        "height": 355
-      },
-      {
-        "file": "oot_bingo_dashboard.html",
-        "width": 1920,
-        "height": 1080
-      },
-      {
-        "file": "test_break.html",
-        "width": 1280,
-        "height": 720
-      },
-      {
-        "file": "test_tronlines.html",
-        "width": 1280,
-        "height": 720
-      },
-      {
-        "file": "test_omnibar.html",
-        "width": 1280,
-        "height": 720
       }
     ],
     "assetCategories": [

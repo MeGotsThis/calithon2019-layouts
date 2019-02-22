@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720">
+  <defs>
+    <rect id="game-feed-1" x="105" y="0" width="532" height="478" />
+    <rect id="game-feed-2" x="643" y="0" width="532" height="478" />
+    <rect id="webcam" x="470" y="478" width="340" height="189" />
+    <mask id="image-mask">
+      <rect x="0" y="0" width="1280" height="720" fill="white" />
+      <use href="#game-feed-1" fill="black" />
+      <use href="#game-feed-2" fill="black" />
+      <use href="#webcam" fill="black" />
+    </mask>
+  </defs>
+  <rect x="0" y="0" width="1280" height="720" mask="url(#image-mask)" />
+</svg>

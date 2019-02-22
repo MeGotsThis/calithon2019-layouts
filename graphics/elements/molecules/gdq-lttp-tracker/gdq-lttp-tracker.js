@@ -1,218 +1,261 @@
-(function () {
-	'use strict';
+(function() {
+  'use strict';
 
-	const urlParams = new URLSearchParams(window.location.search);
-	const MIRROR_MODE = getBooleanUrlParam(urlParams, 'mirrored');
-	const GAME_ID = urlParams.has('game_id') ? urlParams.get('game_id') : 'supportclass';
-	if (MIRROR_MODE) {
-		document.title = `${document.title} (Mirrored)`;
-	}
+  const trackerItems = nodecg.Replicant('lttp-tracker-items');
+  const trackerPrizes = nodecg.Replicant('lttp-tracker-prizes');
+  const trackerMedallions = nodecg.Replicant('lttp-tracker-medallions');
 
-	function getBooleanUrlParam(urlParams, paramName) {
-		return urlParams.has(paramName) && urlParams.get(paramName) !== 'false' && urlParams.get(paramName) !== '0';
-	}
+  const ITEM_ROWS = [[
+    {name: 'hookshot'},
+    {name: 'silvers'},
+    {name: 'bow'},
+    {name: 'boss0'},
+  ], [
+    {name: 'firerod'},
+    {name: 'somaria'},
+    {name: 'hammer'},
+    {name: 'boss1'},
+  ], [
+    {name: 'icerod'},
+    {name: 'byrna'},
+    {name: 'flute'},
+    {name: 'boss2'},
+  ], [
+    {name: 'quake'},
+    {name: 'ether'},
+    {name: 'bombos'},
+    {name: 'boss3'},
+  ], [
+    {name: 'boots'},
+    {name: 'moonpearl'},
+    {name: 'glove', maxLevels: 2}, // has 2 variants (0-2)
+    {name: 'boss4'},
+  ], [
+    {name: 'flippers'},
+    {name: 'mirror'},
+    {name: 'lantern'},
+    {name: 'boss5'},
+  ], [
+    {name: 'powder'},
+    {name: 'book'},
+    {name: 'bottle', maxLevels: 4}, // can be 0-4
+    {name: 'boss6'},
+  ], [
+    {name: 'mushroom'},
+    {name: 'shovel'},
+    {name: 'net'},
+    {name: 'boss7'},
+  ], [
+    {name: 'tunic', startLevel: 1, maxLevels: 3}, // can be 1-3
+    {name: 'shield', maxLevels: 3}, // can be 0-3
+    {name: 'sword', maxLevels: 4}, // can be 0-4
+    {name: 'boss8'},
+  ], [
+    {name: 'cape'},
+    {name: 'boomerang', maxLevels: 3}, // can be 0-3
+    {name: 'boss10'},
+    {name: 'boss9'},
+  ]];
 
-	const ITEM_ROWS = [[
-		{name: 'hookshot'},
-		{name: 'silvers'},
-		{name: 'bow'},
-		{name: 'boss0'}
-	], [
-		{name: 'firerod'},
-		{name: 'somaria'},
-		{name: 'hammer'},
-		{name: 'boss1'}
-	], [
-		{name: 'icerod'},
-		{name: 'byrna'},
-		{name: 'flute'},
-		{name: 'boss2'}
-	], [
-		{name: 'quake'},
-		{name: 'ether'},
-		{name: 'bombos'},
-		{name: 'boss3'}
-	], [
-		{name: 'boots'},
-		{name: 'moonpearl'},
-		{name: 'glove', hasLevels: true}, // has 2 variants (0-2)
-		{name: 'boss4'}
-	], [
-		{name: 'flippers'},
-		{name: 'mirror'},
-		{name: 'lantern'},
-		{name: 'boss5'}
-	], [
-		{name: 'powder'},
-		{name: 'book'},
-		{name: 'bottle', hasLevels: true}, // can be 0-4
-		{name: 'boss6'}
-	], [
-		{name: 'mushroom'},
-		{name: 'shovel'},
-		{name: 'net'},
-		{name: 'boss7'}
-	], [
-		{name: 'tunic', hasLevels: true}, // can be 1-3
-		{name: 'shield', hasLevels: true}, // can be 0-3
-		{name: 'sword', hasLevels: true}, // can be 0-4
-		{name: 'boss8'}
-	], [
-		{name: 'cape'},
-		{name: 'boomerang', hasLevels: true}, // can be 0-3
-		{name: 'boss10'},
-		{name: 'boss9'}
-	]];
+  /**
+   * @customElement
+   * @polymer
+   */
+  class GdqLttpTracker extends Polymer.Element {
+    static get is() {
+      return 'gdq-lttp-tracker';
+    }
 
-	/**
-	 * @customElement
-	 * @polymer
-	 */
-	class GdqLttpTracker extends Polymer.Element {
-		static get is() {
-			return 'gdq-lttp-tracker';
-		}
+    static get properties() {
+      return {
+        importPath: String,
+        itemsAndPrizes: {
+          type: Array,
+        },
+        gameIndex: {
+          type: Number,
+          value: 0,
+        },
+        mirrored: {
+          type: Boolean,
+          reflectToAttribute: true,
+          value: false,
+        },
+      };
+    }
 
-		static get properties() {
-			return {
-				importPath: String, // https://github.com/Polymer/polymer-linter/issues/71
-				itemsAndPrizes: {
-					type: Array
-				},
-				gameId: {
-					type: String,
-					value: GAME_ID
-				},
-				items: {
-					type: Object
-				},
-				prizes: {
-					type: Object
-				},
-				medallions: {
-					type: Array
-				},
-				mirrored: {
-					type: Boolean,
-					reflectToAttribute: true,
-					value: MIRROR_MODE
-				}
-			};
-		}
+    ready() {
+      super.ready();
 
-		static get observers() {
-			return [
-				'_computeItemsAndPrizes(items.*, prizes.*, medallions.*)'
-			];
-		}
+      trackerItems.on('change', this._computeItemsAndPrizes.bind(this));
+      trackerPrizes.on('change', this._computeItemsAndPrizes.bind(this));
+      trackerMedallions.on('change', this._computeItemsAndPrizes.bind(this));
+    }
 
-		ready() {
-			super.ready();
+    _computeItemsAndPrizes() {
+      const finalArray = [];
+      if (trackerItems.status !== 'declared'
+          || trackerPrizes.status !== 'declared'
+          || trackerMedallions.status !== 'declared'
+          || typeof this.gameIndex === 'undefined') {
+        this.itemsAndPrizes = finalArray;
+        return;
+      }
 
-			this.$.auth.signInAnonymously().then(() => {
-				nodecg.log.info('Signed in anonymously.');
-			}).catch(error => {
-				nodecg.log.error('Failed to sign in:', error);
-			});
-		}
+      const items = trackerItems.value[this.gameIndex];
+      const prizes = trackerPrizes.value;
+      const medallions = trackerMedallions.value;
 
-		_computeItemsAndPrizes() {
-			const finalArray = [];
-			const items = this.items;
-			const prizes = this.prizes;
-			const medallions = this.medallions;
+      if (!items || items.length <= 0
+        || !prizes || prizes.length <= 0
+        || !medallions || medallions.length <= 0) {
+        this.itemsAndPrizes = finalArray;
+        return;
+      }
 
-			if (!items || items.length <= 0 ||
-				!prizes || prizes.length <= 0 ||
-				!medallions || medallions.length <= 0) {
-				this.itemsAndPrizes = finalArray;
-				return;
-			}
+      ITEM_ROWS.forEach((row, rowIndex) => {
+        row.forEach((item, itemIndex) => {
+          const itemValue = items[item.name];
 
-			console.log('prizes:', this.prizes);
-			console.log('medallions:', this.medallions);
+          if (itemIndex === 3) {
+            // Empty placeholder for the 4th column, which is blank.
+            finalArray.push({});
+          }
 
-			ITEM_ROWS.forEach((row, rowIndex) => {
-				row.forEach((item, itemIndex) => {
-					const itemValue = items[item.name];
+          finalArray.push({
+            name: item.name,
+            hasLevels: !!item.maxLevels,
+            level: itemValue,
+            dimmed: itemValue === 0 || itemValue === false,
+            rowIndex,
+            itemIndex,
+          });
+        });
 
-					if (itemIndex === 3) {
-						// Empty placeholder for the 4th column, which is blank.
-						finalArray.push({});
-					}
+        // Dungeon prize.
+        const dungeonInfo = {
+          name: 'dungeon',
+          hasLevels: true,
+          level: prizes[rowIndex],
+          dimmed: false,
+          rowIndex,
+        };
 
-					finalArray.push({
-						name: item.name,
-						hasLevels: item.hasLevels,
-						level: itemValue,
-						dimmed: item.name.startsWith('boss') ?
-							itemValue === 1 :
-							itemValue === 0 || itemValue === false
-					});
-				});
+        // Only these two bosses have medallion info.
+        if (rowIndex === 8 || rowIndex === 9) {
+          dungeonInfo.medallionLevel = medallions[rowIndex];
+        }
 
-				// Dungeon prize.
-				const dungeonInfo = {
-					name: 'dungeon',
-					hasLevels: true,
-					level: prizes[rowIndex],
-					dimmed: false
-				};
+        finalArray.push(dungeonInfo);
+      });
 
-				// Only these two bosses have medallion info.
-				if (rowIndex === 8 || rowIndex === 9) {
-					dungeonInfo.medallionLevel = medallions[rowIndex];
-				}
+      this.itemsAndPrizes = finalArray;
+    }
 
-				finalArray.push(dungeonInfo);
-			});
+    _calcCellClass(itemOrPrize, index) {
+      const classes = new Set(['cell']);
+      const sixesRemainder = (index + 1) % 6;
 
-			this.itemsAndPrizes = finalArray;
-		}
+      if (itemOrPrize.dimmed) {
+        classes.add('cell--dimmed');
+      }
 
-		_calcCellClass(itemOrPrize, index) {
-			const classes = new Set(['cell']);
-			const sixesRemainder = (index + 1) % 6;
+      if (sixesRemainder === 0) {
+        classes.add('cell--prize');
+      } else if (sixesRemainder === 4) {
+        classes.add('cell--zeroWidth');
+      }
 
-			if (itemOrPrize.dimmed) {
-				classes.add('cell--dimmed');
-			}
+      return Array.from(classes).join(' ');
+    }
 
-			if (sixesRemainder === 0) {
-				classes.add('cell--prize');
-			} else if (sixesRemainder === 4) {
-				classes.add('cell--zeroWidth');
-			}
+    _calcCellSrc(itemOrPrize) {
+      let src = itemOrPrize.name;
 
-			return Array.from(classes).join(' ');
-		}
+      if (itemOrPrize.hasLevels) {
+        if (typeof itemOrPrize.level === 'number') {
+          src += itemOrPrize.level;
+        } else {
+          return 'blank-pixel';
+        }
+      }
 
-		_calcCellSrc(itemOrPrize) {
-			let src = itemOrPrize.name;
+      return src ? src : 'blank-pixel';
+    }
 
-			if (itemOrPrize.hasLevels) {
-				if (typeof itemOrPrize.level === 'number') {
-					src += itemOrPrize.level;
-				} else {
-					return 'blank-pixel';
-				}
-			}
+    _hasMedallion(itemOrPrize) {
+      return 'medallionLevel' in itemOrPrize;
+    }
 
-			return src ? src : 'blank-pixel';
-		}
+    _calcCellMedallionSrc(itemOrPrize) {
+      if (itemOrPrize.name !== 'dungeon') {
+        return 'blank-pixel';
+      }
 
-		_hasMedallion(itemOrPrize) {
-			return 'medallionLevel' in itemOrPrize;
-		}
+      return `medallion${itemOrPrize.medallionLevel || 0}`;
+    }
 
-		_calcCellMedallionSrc(itemOrPrize) {
-			if (itemOrPrize.name !== 'dungeon') {
-				return 'blank-pixel';
-			}
+    _handleClickImage(e) {
+      const itemOrPrize = e.target.trackeritem;
+      if (itemOrPrize.name === 'dungeon') {
+        const prizes = trackerPrizes.value;
+        prizes[itemOrPrize.rowIndex] = (prizes[itemOrPrize.rowIndex] + 1) % 5;
+        return;
+      }
 
-			return `medallion${itemOrPrize.medallionLevel}`;
-		}
-	}
+      const items = trackerItems.value[this.gameIndex];
+      const item = ITEM_ROWS[itemOrPrize.rowIndex][itemOrPrize.itemIndex];
+      if (item.maxLevels) {
+        if (items[itemOrPrize.name] >= item.maxLevels) {
+          items[itemOrPrize.name] = item.startLevel || 0;
+        } else {
+          items[itemOrPrize.name]++;
+        }
+      } else {
+        items[itemOrPrize.name] = !items[itemOrPrize.name];
+      }
+    }
 
-	customElements.define(GdqLttpTracker.is, GdqLttpTracker);
+    _handleResetImage(e) {
+      const itemOrPrize = e.target.trackeritem;
+      setTimeout(() => {
+        if (itemOrPrize.name === 'dungeon') {
+          const prizes = trackerPrizes.value;
+          prizes[itemOrPrize.rowIndex] = 0;
+          return;
+        }
+
+        const items = trackerItems.value[this.gameIndex];
+        const item = ITEM_ROWS[itemOrPrize.rowIndex][itemOrPrize.itemIndex];
+        if (item.maxLevels) {
+          items[itemOrPrize.name] = item.startLevel || 0;
+        } else {
+          items[itemOrPrize.name] = false;
+        }
+      }, 100);
+    }
+
+    _handleClickMedallion(e) {
+      const itemOrPrize = e.target.trackeritem;
+      if (!('medallionLevel' in itemOrPrize)) {
+        return;
+      }
+      const medallions = trackerMedallions.value;
+      medallions[itemOrPrize.rowIndex] =
+        (medallions[itemOrPrize.rowIndex] + 1) % 4;
+    }
+
+    _handleResetMedallion(e) {
+      const itemOrPrize = e.target.trackeritem;
+      if (!('medallionLevel' in itemOrPrize)) {
+        return;
+      }
+      setTimeout(() => {
+        const medallions = trackerMedallions.value;
+        medallions[itemOrPrize.rowIndex] = 0;
+      }, 100);
+    }
+  }
+
+  customElements.define(GdqLttpTracker.is, GdqLttpTracker);
 })();

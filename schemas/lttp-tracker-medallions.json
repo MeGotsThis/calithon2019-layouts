@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "empty": {
+      "type": "number",
+      "enum": [0]
+    },
+    "medallion": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 3
+    }
+  },
+
+  "type": "array",
+  "items": [
+    {
+      "$ref": "#/definitions/empty"
+    },
+    {
+      "$ref": "#/definitions/empty"
+    },
+    {
+      "$ref": "#/definitions/empty"
+    },
+    {
+      "$ref": "#/definitions/empty"
+    },
+    {
+      "$ref": "#/definitions/empty"
+    },
+    {
+      "$ref": "#/definitions/empty"
+    },
+    {
+      "$ref": "#/definitions/empty"
+    },
+    {
+      "$ref": "#/definitions/empty"
+    },
+    {
+      "$ref": "#/definitions/medallion"
+    },
+    {
+      "$ref": "#/definitions/medallion"
+    }
+  ],
+  "minItems": 10,
+  "maxItems": 10,
+  "default": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+}

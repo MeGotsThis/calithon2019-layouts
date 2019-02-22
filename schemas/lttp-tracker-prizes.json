@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "prize": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 4
+    }
+  },
+
+  "type": "array",
+  "items": [
+    {
+      "$ref": "#/definitions/prize"
+    },
+    {
+      "$ref": "#/definitions/prize"
+    },
+    {
+      "$ref": "#/definitions/prize"
+    },
+    {
+      "$ref": "#/definitions/prize"
+    },
+    {
+      "$ref": "#/definitions/prize"
+    },
+    {
+      "$ref": "#/definitions/prize"
+    },
+    {
+      "$ref": "#/definitions/prize"
+    },
+    {
+      "$ref": "#/definitions/prize"
+    },
+    {
+      "$ref": "#/definitions/prize"
+    },
+    {
+      "$ref": "#/definitions/prize"
+    }
+  ],
+  "minItems": 10,
+  "maxItems": 10,
+  "default": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+}

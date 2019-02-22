@@ -1,0 +1,24 @@
+<link rel="import" href="../../../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="cali-sponsors">
+  <template>
+    <style>
+      :host {
+        display: block;
+        box-sizing: border-box;
+      }
+
+      iron-image {
+        will-change: opacity;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+      }
+    </style>
+
+    <iron-image id="image" sizing="contain" preload></iron-image>
+  </template>
+
+  <script src="cali-sponsors.js"></script>
+</dom-module>

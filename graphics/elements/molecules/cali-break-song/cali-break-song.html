@@ -1,0 +1,67 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="cali-break-song">
+  <template>
+    <style>
+      :host {
+        color: white;
+      }
+
+      #nowplaying {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        @apply --layout-horizontal;
+        @apply --layout-center-center;
+      }
+
+      #left {
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      #icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: var(--icon-width, 1.5em);
+        height: var(--icon-height, 1.5em);
+      }
+
+      #icon img {
+        width: 50%;
+        height: 50%;
+      }
+
+      #nowplaying-outer {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 0 0.5em;
+        @apply --layout-vertical;
+        @apply --layout-flex;
+        will-change: transform;
+      }
+
+      .scroller {
+        display: inline-block;
+      }
+    </style>
+
+    <div id="nowplaying">
+      <div id="left">
+        <div id="icon">
+          <img src="[[importPath]]/../../../../img/note.svg" />
+        </div>
+      </div>
+      <div id="nowplaying-outer">
+        <div id="nowplaying-text"></div>
+      </div>
+    </div>
+
+  </template>
+
+  <script src="cali-break-song.js"></script>
+</dom-module>

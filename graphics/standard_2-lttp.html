@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Standard, 2 Player</title>
+  <link rel="stylesheet" href="style/layout.css">
+  <link rel="import" href="../shared/imports/gsap.html">
+  <link rel="import" href="elements/molecules/cali-finish-time/cali-finish-time.html">
+  <link rel="import" href="elements/molecules/cali-nameplate/cali-nameplate.html">
+  <link rel="import" href="elements/molecules/cali-run-info/cali-run-info.html">
+  <link rel="import" href="elements/molecules/cali-sponsors/cali-sponsors.html">
+  <link rel="import" href="elements/molecules/cali-timer/cali-timer.html">
+  <link rel="import" href="elements/molecules/gdq-lttp-tracker/gdq-lttp-tracker.html">
+
+  <custom-style>
+    <style>
+      #background {
+        -webkit-mask-image: url(img/backgrounds/standard_2_lttp_mask.svg);
+        mask-image: url(img/backgrounds/standard_2_lttp_mask.svg);
+      }
+
+      #container > #main-area {
+        top: 119px;
+      }
+
+      #info {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        width: 470px;
+        height: 147px;
+
+        display: flex;
+        flex-direction: column;
+      }
+
+      gdq-lttp-tracker {
+        position: absolute;
+        top: 0px;
+
+        --cell-size: 35px;
+        --prize-cell-size: 16px;
+      }
+
+      gdq-lttp-tracker[game-index="0"] {
+        right: calc(640px - var(--prize-cell-size) / 2);
+      }
+
+      gdq-lttp-tracker[game-index="1"] {
+        left: calc(640px - var(--prize-cell-size) / 2);
+      }
+
+      cali-nameplate {
+        position: absolute;
+        top: 359px;
+        width: 463px;
+        font-size: 28px;
+      }
+
+      cali-nameplate[index="0"] {
+        left: 7px;
+      }
+
+      cali-nameplate[index="1"] {
+        right: 7px;
+      }
+
+      cali-finish-time {
+        position: absolute;
+        bottom: 189px;
+        width: 451px;
+        font-size: 32px;
+      }
+
+      cali-finish-time[index="0"] {
+        left: 13px;
+      }
+
+      cali-finish-time[index="1"] {
+        right: 13px;
+      }
+
+      cali-nameplate[index="0"],
+      cali-finish-time[index="0"] {
+        --name-color: var(--runner-1-color-1);
+        --time-color: var(--runner-1-color-2);
+      }
+
+      cali-nameplate[index="1"],
+      cali-finish-time[index="1"] {
+        --name-color: var(--runner-2-color-1);
+        --time-color: var(--runner-2-color-2);
+      }
+
+      cali-run-info {
+        font-size: 28px;
+
+        --run-primary-color: var(--info-color-1);
+        --run-secondary-color: var(--info-color-2);
+      }
+
+      cali-timer {
+        flex: 1;
+
+        font-weight: 800;
+        font-size: 38px;
+
+        --timer-primary-color: var(--info-color-1);
+        --timer-secondary-color: var(--info-color-2);
+      }
+
+      cali-sponsors {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        width: 470px;
+        height: 147px;
+        padding: 25px;
+      }
+    </style>
+  </custom-style>
+</head>
+<body>
+  <div id="container">
+    <div id="background">
+      <div id="background-image" style="background-image: url('img/backgrounds/La Jolla.png')"></div>
+      <div id="background-overlay"></div>
+    </div>
+    <div id="main-area">
+      <div id="info">
+        <cali-timer></cali-timer>
+        <cali-run-info></cali-run-info>
+      </div>
+      <gdq-lttp-tracker game-index="0"></gdq-lttp-tracker>
+      <gdq-lttp-tracker game-index="1" mirrored></gdq-lttp-tracker>
+      <cali-nameplate index="0"></cali-nameplate>
+      <cali-nameplate index="1" right></cali-nameplate>
+      <cali-finish-time index="0" attach="bottom"></cali-finish-time>
+      <cali-finish-time index="1" attach="bottom" reverse></cali-finish-time>
+      <cali-sponsors></cali-sponsors>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      TweenLite.to(document.body, 0.333, {
+        opacity: 1,
+        ease: Power1.easeOut,
+      });
+    });
+  </script>
+</body>
+</html>

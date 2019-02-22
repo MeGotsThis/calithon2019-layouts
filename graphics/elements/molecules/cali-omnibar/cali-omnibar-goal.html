@@ -1,0 +1,49 @@
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../shared/style/gdq-text-styles.html">
+
+<dom-module id="cali-omnibar-goal">
+  <template>
+    <style include="gdq-text-styles">
+      :host {
+        height: 100%;
+        width: 100%;
+        margin-right: 2px !important;
+        position: relative;
+        padding: 0 8px;
+        z-index: 2;
+        box-sizing: border-box;
+        font-size: 125%;
+      }
+
+      #text {
+        position: relative;
+        height: 100%;
+        z-index: 4;
+        color: white;
+        font-weight: 700;
+        transform: translateY(-100%);
+        @apply --layout-horizontal;
+        @apply --layout-center-center;
+      }
+
+      #total {
+        color: #00d8ff;
+      }
+
+      #rest {
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+
+    <div id="text">
+      <div id="rest">
+        <span id="total"></span> to Calithon 2018 goal of <span id="goal"></span>! Donate now!
+      </div>
+    </div>
+  </template>
+
+  <script src="cali-omnibar-goal.js"></script>
+</dom-module>

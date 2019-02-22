@@ -1,0 +1,59 @@
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../shared/style/gdq-text-styles.html">
+
+<dom-module id="cali-omnibar-prize">
+  <template>
+    <style include="gdq-text-styles">
+      :host {
+        height: 100%;
+        position: relative;
+        padding: 0 8px;
+        z-index: 2;
+        box-sizing: border-box;
+      }
+
+      #text {
+        position: relative;
+        height: 100%;
+        margin-right: 5px;
+        z-index: 4;
+        color: white;
+        font-weight: 700;
+        transform: translateY(-100%);
+        @apply --layout-vertical;
+        @apply --layout-around-justified;
+      }
+
+      #name,
+      #bidAmount {
+        position: relative;
+      }
+
+      #description {
+        font-size: 100%;
+      }
+
+      #bidAmount {
+        font-size: 75%;
+        bottom: 4px;
+      }
+
+      #bar {
+        position: absolute;
+        top: 0;
+        left: calc(100% + 8px);
+        width: 5px;
+        height: 100%;
+        background-color: var(--blue-1);
+      }
+    </style>
+
+    <div id="text">
+      <div id="name">[[prize.name]]</div>
+      <div id="bidAmount">[[calcBidAmountText(prize)]]</div>
+      <div id="bar"></div>
+    </div>
+  </template>
+
+  <script src="cali-omnibar-prize.js"></script>
+</dom-module>

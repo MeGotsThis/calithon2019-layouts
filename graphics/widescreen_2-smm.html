@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Widescreen, 2 Player - Super Mario Maker</title>
+  <link rel="stylesheet" href="style/layout.css">
+  <link rel="import" href="../shared/imports/gsap.html">
+  <link rel="import" href="elements/molecules/cali-finish-time/cali-finish-time.html">
+  <link rel="import" href="elements/molecules/cali-nameplate/cali-nameplate.html">
+  <link rel="import" href="elements/molecules/cali-run-info/cali-run-info.html">
+  <link rel="import" href="elements/molecules/cali-sponsors/cali-sponsors.html">
+  <link rel="import" href="elements/molecules/cali-timer/cali-timer.html">
+
+  <custom-style>
+    <style>
+      #background {
+        -webkit-mask-image: url(img/backgrounds/widescreen_2_smm_mask.svg);
+        mask-image: url(img/backgrounds/widescreen_2_smm_mask.svg);
+      }
+
+      #container > #main-area {
+        top: 40px;
+      }
+
+      #container > #mario-maker {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 40px;
+        padding: 5px;
+        box-sizing: border-box;
+      }
+
+      #mario-maker > iframe {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        border: none;
+      }
+
+      #info {
+      }
+
+      cali-nameplate {
+        position: absolute;
+        top: 359px;
+        width: 439px;
+        font-size: 28px;
+      }
+
+      cali-nameplate[index="0"] {
+        left: 0;
+      }
+
+      cali-nameplate[index="1"] {
+        right: 0;
+      }
+
+      cali-finish-time {
+        position: absolute;
+        bottom: 268px;
+        width: 427px;
+        font-size: 32px;
+      }
+
+      cali-finish-time[index="0"] {
+        left: 6px;
+      }
+
+      cali-finish-time[index="1"] {
+        right: 6px;
+      }
+
+      cali-nameplate[index="0"],
+      cali-finish-time[index="0"] {
+        --name-color: var(--runner-1-color-1);
+        --time-color: var(--runner-1-color-2);
+      }
+
+      cali-nameplate[index="1"],
+      cali-finish-time[index="1"] {
+        --name-color: var(--runner-2-color-1);
+        --time-color: var(--runner-2-color-2);
+      }
+
+      cali-run-info {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        width: 439px;
+
+        font-size: 28px;
+
+        --run-primary-color: var(--info-color-1);
+        --run-secondary-color: var(--info-color-2);
+      }
+
+      cali-timer {
+        position: absolute;
+        top: 359px;
+        left: 439px;
+        right: 439px;
+
+        font-weight: 800;
+        font-size: 48px;
+
+        --timer-primary-color: var(--info-color-1);
+        --timer-secondary-color: var(--info-color-2);
+      }
+
+      cali-sponsors {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        width: 439px;
+        height: 226px;
+        padding: 25px;
+      }
+    </style>
+  </custom-style>
+</head>
+<body>
+  <div id="container">
+    <div id="background">
+      <div id="background-image" style="background-image: url('img/backgrounds/SF Bay.jpg')"></div>
+      <div id="background-overlay"></div>
+    </div>
+    <div id="mario-maker">
+      <iframe id="mario-maker-bar" src=""></iframe>
+    </div>
+    <div id="main-area">
+      <cali-timer></cali-timer>
+      <cali-run-info></cali-run-info>
+      <cali-nameplate index="0"></cali-nameplate>
+      <cali-nameplate index="1" right></cali-nameplate>
+      <cali-finish-time index="0" attach="bottom"></cali-finish-time>
+      <cali-finish-time index="1" attach="bottom" reverse></cali-finish-time>
+      <cali-sponsors></cali-sponsors>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const mmConfig = nodecg.bundleConfig.marioMaker;
+      const bar = document.getElementById('mario-maker-bar');
+      bar.src =
+        `http://warp.world/warp-bar?streamer=${mmConfig.streamer}`
+        + `&key=${mmConfig.secretKey}`;
+      TweenLite.to(document.body, 0.333, {
+        opacity: 1,
+        ease: Power1.easeOut,
+      });
+    });
+  </script>
+</body>
+</html>

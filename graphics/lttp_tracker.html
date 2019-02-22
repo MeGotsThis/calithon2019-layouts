@@ -1,24 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>LttP Tracker</title>
-	<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-	<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
-	<link rel="import" href="elements/molecules/gdq-lttp-tracker/gdq-lttp-tracker.html">
-	<custom-style>
-		<style include="iron-flex iron-positioning">
-			body {
-				overflow: hidden;
-			}
+  <meta charset="UTF-8">
+  <title>LttP Tracker</title>
+  <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+  <link rel="import" href="elements/molecules/gdq-lttp-tracker/gdq-lttp-tracker.html">
+  <custom-style>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        font-family: sans-serif;
+      }
 
-			gdq-lttp-tracker {
-				@apply --layout-flex;
-			}
-		</style>
-	</custom-style>
+      #games {
+        display: flex;
+        flex-direction: row;
+      }
+
+      #games > * {
+        border: black 2px solid;
+        padding: 16px;
+        margin: 20px;
+      }
+
+      #game1, #game2 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #name1, #name2 {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 1em;
+      }
+
+      gdq-lttp-tracker {
+        --cell-size: 80px;
+        --prize-cell-size: 45px;
+      }
+
+      gdq-lttp-tracker[game-index="0"] {
+        left: 0;
+      }
+
+      gdq-lttp-tracker[game-index="1"] {
+        right: 0;
+      }
+
+      #directions {
+        width: 480px;
+        font-size: 16px;
+      }
+
+      #directions > p:first-child {
+        margin-top: 0;
+      }
+
+      #prizes {
+        padding-top: 1em;
+      }
+
+      .upgradables > .images,
+      #prizes > .prize {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .upgradables > .images > img.dimmed {
+        opacity: 0.25;
+      }
+
+      .upgradables > .images > img,
+      #prizes > .prize > img {
+        background-color: black;
+        width: 48px;
+        height: 48px;
+      }
+
+      .upgradables > .images > img,
+      #prizes > .prize > img {
+        background-color: black;
+      }
+
+      #prizes > .prize > img {
+        background-color: #AE00FF;
+      }
+
+      .upgradables > .images > span,
+      #prizes > .prize > span {
+        padding: 0.5em;
+      }
+    </style>
+  </custom-style>
 </head>
-<body class="fullbleed vertical layout">
-	<gdq-lttp-tracker></gdq-lttp-tracker>
+<body>
+  <div id="games">
+    <div id="game1">
+      <div id="name1">?</div>
+      <gdq-lttp-tracker game-index="0"></gdq-lttp-tracker>
+    </div>
+    <div id="game2">
+      <div id="name2">?</div>
+      <gdq-lttp-tracker game-index="1"></gdq-lttp-tracker>
+    </div>
+    <div id="directions">
+      <p>Purple background represents the prize to the boss directly left to it.</p>
+      <p>For the 9th and 10th bosses, they require certain medallions to enter the dungeon. Click the medallion to change it to any of the three.</p>
+      <p>
+        Click the boss when the boss is completed.
+        <br />
+        Click the item to toggle or advance the item.
+        <br />
+        Double click to reset the icon.
+      </p>
+      <div id="glove" class="upgradables">
+        <span>Glove</span>
+        <div class="images">
+          <img src="elements/molecules/gdq-lttp-tracker/img/glove0.png" class="dimmed"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/glove1.png"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/glove2.png"></img>
+        </div>
+      </div>
+      <div id="bottle" class="upgradables">
+        <span>Bottle</span>
+        <div class="images">
+          <img src="elements/molecules/gdq-lttp-tracker/img/bottle0.png" class="dimmed"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/bottle1.png"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/bottle2.png"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/bottle3.png"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/bottle4.png"></img>
+        </div>
+      </div>
+      <div id="tunic" class="upgradables">
+        <span>Tunic</span>
+        <div class="images">
+          <img src="elements/molecules/gdq-lttp-tracker/img/tunic1.png"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/tunic2.png"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/tunic3.png"></img>
+        </div>
+      </div>
+      <div id="shield" class="upgradables">
+        <span>Shield</span>
+        <div class="images">
+          <img src="elements/molecules/gdq-lttp-tracker/img/shield0.png" class="dimmed"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/shield1.png"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/shield2.png"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/shield3.png"></img>
+        </div>
+      </div>
+      <div id="sword" class="upgradables">
+        <span>Sword</span>
+        <div class="images">
+          <img src="elements/molecules/gdq-lttp-tracker/img/sword0.png" class="dimmed"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/sword1.png"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/sword2.png"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/sword3.png"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/sword4.png"></img>
+        </div>
+      </div>
+      <div id="boomerang" class="upgradables">
+        <span>Boomerang</span>
+        <div class="images">
+          <img src="elements/molecules/gdq-lttp-tracker/img/boomerang0.png" class="dimmed"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/boomerang1.png"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/boomerang2.png"></img>
+          <span>&gt;</span>
+          <img src="elements/molecules/gdq-lttp-tracker/img/boomerang3.png"></img>
+        </div>
+      </div>
+      <div id="prizes">
+        <span>Prizes</span>
+        <div class="prize">
+          <img src="elements/molecules/gdq-lttp-tracker/img/dungeon0.png"></img>
+          <span>- Prize Unknown</span>
+        </div>
+        <div class="prize">
+          <img src="elements/molecules/gdq-lttp-tracker/img/dungeon1.png"></img>
+          <span>- Pendant of Courage (required for Sahasrahla)</span>
+        </div>
+        <div class="prize">
+          <img src="elements/molecules/gdq-lttp-tracker/img/dungeon2.png"></img>
+          <span>- Pendant of Wisdom/Power</span>
+        </div>
+        <div class="prize">
+          <img src="elements/molecules/gdq-lttp-tracker/img/dungeon3.png"></img>
+          <span>- Crystals</span>
+        </div>
+        <div class="prize">
+          <img src="elements/molecules/gdq-lttp-tracker/img/dungeon4.png"></img>
+          <span>- Red Crystals (both required for Super Bombs)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app/lttp_tracker.js"></script>
 </body>
 </html>

@@ -1,30 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Countdown</title>
-	<link rel="stylesheet" href="style/layout.css">
-	<link rel="import" href="../shared/imports/gsap.html">
-	<link rel="import" href="elements/molecules/gdq-countdown/gdq-countdown.html">
+  <meta charset="UTF-8">
+  <title>Countdown</title>
+  <link rel="stylesheet" href="style/layout.css">
+  <link rel="import" href="../shared/imports/gsap.html">
 
-	<style>
-		#container {
-			height: 900px;
-		}
-	</style>
+  <custom-style>
+    <style>
+      #container {
+        height: 720px;
+      }
+
+      video {
+        width: 1280px;
+        height: 720px;
+      }
+
+      #logo {
+        position: absolute;
+        top: 180px;
+        left: 0;
+        width: 1280px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #logo img {
+        width: 408px;
+      }
+
+      #countdown-section {
+        position: absolute;
+        left: 453px;
+        top: 352px;
+        width: 375px;
+
+        display: flex;
+        flex-direction: column;
+      }
+
+      #countdown {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background-color: var(--blue-2);
+
+        font-size: 56px;
+        color: white;
+        letter-spacing: 0.01em;
+        text-align: center;
+      }
+
+      #countdown-bar {
+        height: 5px;
+        background-color: var(--blue-1);
+      }
+
+      #music-section {
+        position: absolute;
+        top: 471px;
+        left: 270px;
+        width: 740px;
+
+        color: white;
+        font-size: 36px;
+
+        display: flex;
+        flex-direction: column;
+      }
+
+      #music {
+        width: 100%;
+        height: 1.5em;
+
+        background-color: var(--teal-2);
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+
+      #note {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 1.5em;
+        height: 1.5em;
+      }
+
+      #note img {
+        width: 50%;
+        height: 50%;
+      }
+
+      #nowPlayingPadding {
+        flex: 1;
+        min-width: 0;
+        padding: 0 0.2em 0 0;
+      }
+
+      #nowPlaying {
+        white-space: nowrap;
+        transform-origin: left;
+      }
+
+      #music-bar {
+        height: 5px;
+        background-color: var(--teal-1);
+      }
+    </style>
+  </custom-style>
 </head>
 <body>
-	<div id="container">
-		<gdq-countdown></gdq-countdown>
-	</div>
+<div id="container">
+  <div id="background">
+    <video autoplay loop muted="false" src="img/video/countdown.webm"></video>
+    <div id="background-overlay"></div>
+  </div>
+  <div id="logo">
+    <img src="img/logo/countdown-logo.png"></img>
+  </div>
+  <div id="countdown-section">
+    <div id="countdown">
+      <span id="countdownMinutes"></span><span id="countdownColon">:</span><span id="countdownSeconds"></span>
+    </div>
+    <div id="countdown-bar"></div>
+  </div>
+  <div id="music-section">
+    <div id="music">
+      <div id="note">
+        <img src="img/note.svg"></img>
+      </div>
+      <div id="nowPlayingPadding">
+        <div id="nowPlaying"></div>
+      </div>
+    </div>
+    <div id="music-bar"></div>
+  </div>
+</div>
 
-	<script>
-		window.addEventListener('DOMContentLoaded', () => {
-			TweenLite.to(document.body, 0.333, {
-				opacity: 1,
-				ease: Power1.easeOut
-			});
-		});
-	</script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    TweenLite.to(document.body, 0.333, {
+      opacity: 1,
+      ease: Power1.easeOut,
+    });
+  });
+</script>
+
+<script src="app/countdown.js"></script>
 </body>
 </html>

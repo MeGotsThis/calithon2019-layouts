@@ -1,0 +1,127 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../shared/imports/constants.html">
+<link rel="import" href="../../../shared/style/gdq-text-styles.html">
+<link rel="import" href="cali-omnibar-bid.html">
+<link rel="import" href="cali-omnibar-goal.html">
+<link rel="import" href="cali-omnibar-label.html">
+<link rel="import" href="cali-omnibar-prize.html">
+<link rel="import" href="cali-omnibar-record.html">
+<link rel="import" href="cali-omnibar-run.html">
+
+<dom-module id="cali-omnibar-content">
+  <template>
+    <style include="gdq-text-styles">
+      :host {
+        color: white;
+      }
+
+      #body {
+        display: flex;
+        flex-grow: 1;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+      }
+
+      #main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        line-height: 1;
+        white-space: nowrap;
+        z-index: 1;
+        min-width: 1px; /* needed for fitMainText method */
+        overflow: hidden;
+        @apply --layout-flex;
+      }
+
+      #main-content {
+        height: 100%;
+        min-width: 100%;
+        will-change: transform;
+        flex-grow: 1;
+        flex-shrink: 0;
+        @apply --layout-horizontal;
+      }
+
+      #main-content > * {
+        margin: 0 1.5px;
+      }
+
+      #main-content > *:last-child {
+        margin-right: 0;
+      }
+
+      #cta,
+      #newRecord {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+      }
+
+      #cta {
+        width: 100%;
+        font-size: 150%;
+        transform: translateY(100%);
+      }
+
+      #cta > div {
+        line-height: 54px;
+        flex-shrink: 0;
+      }
+
+      #newRecord {
+        z-index: 100;
+        box-sizing: border-box;
+        width: calc(100% - 2px);
+        visibility: hidden;
+        @apply --layout-horizontal;
+        @apply --layout-center-center;
+      }
+
+      #newRecord-text {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      #newRecord-text {
+        color: #ffffff;
+        font-size: 30px;
+        font-weight: 700;
+        text-transform: uppercase;
+        z-index: 4;
+        text-align: center;
+        @apply --layout-horizontal;
+        @apply --layout-center-center;
+      }
+
+      .highlight {
+        color: #00d8ff;
+      }
+    </style>
+
+    <div id="body">
+      <cali-omnibar-label id="label"></cali-omnibar-label>
+      <div id="main">
+        <div id="main-content"></div>
+      </div>
+      <div id="cta">
+        <div><span class="highlight">Calithon2018</span> benefits Direct Relief</div>
+        <div>Make your donation at <span class="highlight">calithon.com</span></div>
+      </div>
+      <div id="newRecord">
+        <div id="newRecord-text">NEW RECORD DONATION TOTAL FOR CALITHON!</div>
+      </div>
+    </div>
+  </template>
+
+  <script src="cali-omnibar-content.js"></script>
+</dom-module>

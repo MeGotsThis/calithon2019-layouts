@@ -1,30 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Omnibar</title>
-	<link rel="stylesheet" href="style/base.css">
-	<link rel="import" href="../shared/imports/gsap.html">
-	<link rel="import" href="elements/molecules/gdq-omnibar/gdq-omnibar.html">
-	<style>
-		#container {
-			width: 1600px;
-			height: 55px;
-		}
-	</style>
+  <meta charset="UTF-8">
+  <title>Omnibar</title>
+  <link rel="stylesheet" href="style/base.css">
+  <link rel="import" href="../shared/imports/gsap.html">
+  <link rel="import" href="elements/molecules/cali-omnibar/cali-omnibar-content.html">
+  <link rel="import" href="elements/molecules/cali-omnibar/cali-omnibar-total.html">
+  <style>
+    #container {
+      width: 1280px;
+      height: 53px;
+
+      background-color: rgba(33, 33, 43, 0.8);
+
+      display: flex;
+    }
+
+    #charity-logo {
+      width: 53px;
+      background-color: #2F8089;
+    }
+
+    #total {
+      width: 198px;
+      background-color: #3298A0;
+    }
+
+    #bar {
+      flex: 1;
+      font-size: 20px;
+      min-width: 0px;
+    }
+
+    #logo {
+      width: 163px;
+      background-color: #1F8FBE;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #logo img {
+      width: 88%;
+    }
+  </style>
 </head>
 <body>
-	<div id="container">
-		<gdq-omnibar></gdq-omnibar>
-	</div>
+  <div id="container">
+    <img id="charity-logo" src="img/logo/charity-logo.png"></img>
+    <div id="total">
+      <cali-omnibar-total></cali-omnibar-total>
+    </div>
+    <div id="bar">
+      <cali-omnibar-content></cali-omnibar-content>
+    </div>
+    <div id="logo">
+      <img src="img/logo/marathon-logo.png"></img>
+    </div>
+  </div>
 
-	<script>
-		window.addEventListener('DOMContentLoaded', () => {
-			TweenLite.to(document.body, 0.333, {
-				opacity: 1,
-				ease: Power1.easeOut
-			});
-		});
-	</script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      TweenLite.to(document.body, 0.333, {
+        opacity: 1,
+        ease: Power1.easeOut,
+      });
+    });
+  </script>
 </body>
 </html>

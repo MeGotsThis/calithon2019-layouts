@@ -1,51 +1,64 @@
 @import 'base.css';
 
-body {
-	font-family: 'Source Code Pro';
-}
-
 #container {
-	position: relative;
-	width: 1600px;
-	height: 845px;
+  width: 1280px;
+  height: 720px;
 }
 
 #container > #background,
 #container > #foreground,
 #container > #addon {
-	position: absolute;
-	top: 0;
-	left: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 #container > #background {
-	z-index: -10;
+  z-index: -10;
+}
+
+#container > #background > img {
+  filter: blur(4px);
+}
+
+#container > #background > #background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  filter: blur(4px);
+  background-size: cover;
+  background-position: center center;
+}
+
+#container > #background > #background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: rgba(9, 53, 71, 0.7);
 }
 
 #container > #foreground {
-	pointer-events: none;
-	z-index: 10;
+  pointer-events: none;
+  z-index: 10;
 }
 
 #container > #addon {
-	pointer-events: none;
-	z-index: -11;
+  pointer-events: none;
+  z-index: -11;
 }
 
-/*
-For use in gathering viewport metrics.
-Dump this javascript into your console to make the measuring div appear:
-
-const measuringDiv = document.createElement('div');
-measuringDiv.id = 'measuring';
-measuringDiv.style.left = '0px';
-measuringDiv.style.top = '0px';
-document.body.appendChild(measuringDiv);
- */
-#measuring {
-	position: absolute;
-	width: 200px;
-	height: 150px;
-	background-color: #464646;
-	z-index: -100;
+#container > #main-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 53px;
 }
