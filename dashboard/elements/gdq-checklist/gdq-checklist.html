@@ -72,15 +72,6 @@
 					<template is="dom-repeat" items="[[techStationDuties]]" mutable-data>
 						<paper-checkbox category="techStationDuties" checked="[[item.complete]]">[[item.name]]</paper-checkbox>
 					</template>
-
-					<div id="audioCheckboxWrapper">
-						<paper-checkbox
-							id="audioCheckbox"
-							class="non-interactive has-tooltip"
-							checked="[[audioReady]]">
-							Audio Engineer(s) Ready
-						</paper-checkbox>
-					</div>
 				</div>
 
 				<gdq-checklist-recording
@@ -92,14 +83,7 @@
 			</section>
 
 			<section>
-				<div class="header">Extra Content</div>
-				<div class="group horizontal">
-					<template is="dom-repeat" items="[[extraContent]]" mutable-data>
-						<paper-checkbox category="extraContent" checked="[[item.complete]]">[[item.name]]</paper-checkbox>
-					</template>
-				</div>
-
-				<div class="header" style="margin-top: 21px;">Stage Tech Duties</div>
+				<div class="header">Stage Tech Duties</div>
 				<div class="group">
 					<template is="dom-repeat" items="[[stageTechDuties]]" mutable-data>
 						<paper-checkbox category="stageTechDuties" checked="[[item.complete]]">[[item.name]]</paper-checkbox>
@@ -107,14 +91,6 @@
 				</div>
 			</section>
 		</div>
-
-		<paper-tooltip
-			id="audioTooltip"
-			for="audioCheckboxWrapper"
-			position="right"
-			animation-delay="0">
-			Automatically checked when the Audio Engineer(s) have completed their own checklist.
-		</paper-tooltip>
 
 		<paper-tooltip
 			id="recordingTooltip"

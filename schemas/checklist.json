@@ -46,8 +46,6 @@
 
 	"default": {
 		"extraContent": [
-			{"name": "Check for Advertisement", "shortName": "Check for Ad", "complete": false},
-			{"name": "Check for Interview", "complete": false}
 		],
 		"techStationDuties": [
 			{"name": "Check Tech Notes", "complete": false},
@@ -59,12 +57,11 @@
 			{"name": "Wipe Down Headsets", "shortName": "Wipe Headsets", "complete": false},
 			{"name": "TVs have Video", "complete": false},
 			{"name": "Steam Notifications Off", "shortName": "Steam Notifications", "complete": false},
-			{"name": "Restart Elgato Recording", "shortName": "Restart Elgato Rec.", "complete": false},
-			{"name": "Remove Excess Chairs", "shortName": "Remove Chairs", "complete": false}
+			{"name": "Remove Excess Chairs", "shortName": "Remove Chairs", "complete": false},
+      {"name": "Runner Game Audio", "complete": false},
+			{"name": "Stream Audio", "complete": false}
 		],
 		"audioEngineerDuties": [
-			{"name": "Runner Game Audio", "complete": false},
-			{"name": "Stream Audio", "complete": false}
 		],
 		"special": [
 			{"name": "Cycle Recordings", "complete": false}
