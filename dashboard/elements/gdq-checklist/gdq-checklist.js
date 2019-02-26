@@ -30,6 +30,7 @@
 
 			this._checkboxChanged = this._checkboxChanged.bind(this);
 			this.addEventListener('change', this._checkboxChanged);
+      this.audioEngineer = nodecg.bundleConfig.techDashboardShowAudioEngineer;
 		}
 
 		_checkboxChanged(e) {

@@ -57,11 +57,11 @@
 			{"name": "Wipe Down Headsets", "shortName": "Wipe Headsets", "complete": false},
 			{"name": "TVs have Video", "complete": false},
 			{"name": "Steam Notifications Off", "shortName": "Steam Notifications", "complete": false},
-			{"name": "Remove Excess Chairs", "shortName": "Remove Chairs", "complete": false},
-      {"name": "Runner Game Audio", "complete": false},
-			{"name": "Stream Audio", "complete": false}
+			{"name": "Remove Excess Chairs", "shortName": "Remove Chairs", "complete": false}
 		],
 		"audioEngineerDuties": [
+      {"name": "Runner Game Audio", "complete": false},
+			{"name": "Stream Audio", "complete": false}
 		],
 		"special": [
 			{"name": "Cycle Recordings", "complete": false}

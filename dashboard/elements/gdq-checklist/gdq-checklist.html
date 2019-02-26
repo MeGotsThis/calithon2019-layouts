@@ -89,6 +89,15 @@
 						<paper-checkbox category="stageTechDuties" checked="[[item.complete]]">[[item.name]]</paper-checkbox>
 					</template>
 				</div>
+
+        <div id="audioEngineerGroup" hidden$="[[!audioEngineer]]">
+          <div class="header">Audio Engineer Duties</div>
+          <div class="group">
+            <template is="dom-repeat" items="[[audioEngineerDuties]]" mutable-data>
+              <paper-checkbox category="audioEngineerDuties" checked="[[item.complete]]">[[item.name]]</paper-checkbox>
+            </template>
+          </div>
+        </div>
 			</section>
 		</div>
 
