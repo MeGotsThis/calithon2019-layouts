@@ -305,7 +305,11 @@
 			"description": "API credentials for the optional VictorOps integration..",
 			"required": ["enabled", "apiId", "apiKey", "restEndpoint"],
 			"default": null
-		}
+		},
+    "techDashboardShowAudioEngineer": {
+      "type": "boolean",
+      "default": false
+    }
 	},
 
 	"required": ["tracker"]

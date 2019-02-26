@@ -90,9 +90,14 @@
 					</template>
 				</div>
 
-        <div id="audioEngineerGroup" hidden$="[[!audioEngineer]]">
+        <div id="audioEngineerGroup">
           <div class="header">Audio Engineer Duties</div>
-          <div class="group">
+          <paper-checkbox
+            id="audioCheckbox"
+            class="non-interactive"
+            checked="[[audioReady]]"
+            hidden$="[[audioEngineer]]">Audio Engineer(s) Ready</paper-checkbox>
+          <div class="group" hidden$="[[!audioEngineer]]">
             <template is="dom-repeat" items="[[audioEngineerDuties]]" mutable-data>
               <paper-checkbox category="audioEngineerDuties" checked="[[item.complete]]">[[item.name]]</paper-checkbox>
             </template>

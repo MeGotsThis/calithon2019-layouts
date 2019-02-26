@@ -23,7 +23,8 @@
 			checklist.on('change', newVal => {
 				this.extraContent = newVal.extraContent;
 				this.techStationDuties = newVal.techStationDuties;
-				this.stageTechDuties = newVal.stageTechDuties;
+        this.stageTechDuties = newVal.stageTechDuties;
+				this.audioEngineerDuties = newVal.audioEngineerDuties;
 				this.audioReady = newVal.audioEngineerDuties.every(task => task.complete);
 				this.recordingsCycled = newVal.special.find(task => task.name === 'Cycle Recordings').complete;
 			});
