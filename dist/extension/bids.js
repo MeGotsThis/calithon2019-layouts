@@ -1,6 +1,7 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
 // Packages
+const clone = require('clone');
 const equal = require("deep-equal");
 const numeral = require("numeral");
 const request = require("request-promise");
@@ -12,13 +13,15 @@ const nodecg = nodecgApiContext.get();
 const POLL_INTERVAL = 60 * 1000;
 const currentBidsRep = nodecg.Replicant('currentBids', { defaultValue: [] });
 const allBidsRep = nodecg.Replicant('allBids', { defaultValue: [] });
+const schedule = nodecg.Replicant('schedule');
+const total = nodecg.Replicant('total');
 const bitsTotal = nodecg.Replicant('bits:total');
 // Get latest bid data every POLL_INTERVAL milliseconds
 update();
 /**
  * Grabs the latest bids from the Tracker.
  */
-function update() {
+async function update() {
     nodecg.sendMessage('bids:updating');
     const challengesPromise = tiltify.getChallenges();
     const pollsPromise = tiltify.getPolls();

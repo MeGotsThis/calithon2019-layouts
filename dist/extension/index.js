@@ -39,6 +39,7 @@ async function init() {
     const {loginToTracker} = require('./horaro');
     if (TRACKER_CREDENTIALS_CONFIGURED) {
         await loginToTracker();
+        await require('./tiltify').loadCsfrToken();
         // Tracker logins expire every 2 hours. Re-login every 90 minutes.
         setInterval(loginToTracker, 90 * 60 * 1000);
     }

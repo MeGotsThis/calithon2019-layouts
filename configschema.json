@@ -161,6 +161,72 @@
 			"additionalProperties": false,
 			"default": null
 		},
+    "prizes": {
+      "type": ["object", "null"],
+      "properties": {
+        "sum": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "default": []
+        },
+        "grand": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "default": []
+        }
+      },
+      "default": {
+        "sum": [],
+        "grand": []
+      }
+    },
+    "donation": {
+      "type": ["object", "null"],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "pusherKey": {
+          "type": "string"
+        },
+        "apiKey": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "recent": {
+          "type": "number",
+          "default": 10
+        },
+        "mock": {
+          "type": "boolean"
+        },
+        "mockInitialTotal": {
+          "type": ["null", "number"],
+          "default": null,
+          "minimum": 0
+        },
+        "mockAmount": {
+          "type": "number",
+          "default": 100,
+          "minimum": 0,
+          "exclusiveMinimum": true
+        },
+        "mockInterval": {
+          "type": "number",
+          "default": 30,
+          "minimum": 0,
+          "exclusiveMinimum": true
+        }
+      },
+      "required": ["enabled", "pusherKey", "slug"],
+      "default": null
+    },
 		"tracker": {
 			"type": "object",
 			"properties": {

@@ -1,6 +1,7 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
 // Packages
+const clone = require('clone');
 const equal = require("deep-equal");
 const numeral = require("numeral");
 const request = require("request-promise");
@@ -26,12 +27,12 @@ setInterval(() => {
    const _allPrizes = rewards.map(formatPrize);
    const _currentPrizes = clone(_allPrizes.filter((prize) => prize.active));
 
-   if (!equal(allPrizes.value, _allPrizes)) {
-     allPrizes.value = _allPrizes;
+   if (!equal(allPrizesRep.value, _allPrizes)) {
+     allPrizesRep.value = _allPrizes;
    }
 
-   if (!equal(currentPrizes.value, _currentPrizes)) {
-     currentPrizes.value = _currentPrizes;
+   if (!equal(currentPrizesRep.value, _currentPrizes)) {
+     currentPrizesRep.value = _currentPrizes;
    }
  }
 /**
@@ -39,7 +40,7 @@ setInterval(() => {
  * @param rawPrize - A raw prize object from the GDQ Tracker API.
  * @returns The formatted prize object.
  */
-function formatPrize(rawPrize) {
+function formatPrize(prize) {
   const active = prize.alwaysActive || (prize.active
     && (prize.startsAt === 0 || Date.now() >= prize.startsAt)
     && (prize.endsAt === 0 || Date.now() <= prize.endsAt)
