@@ -29,95 +29,82 @@
 
       #marathon-logo {
         position: absolute;
-        top: 10px;
-        left: 10px;
-        height: 120px;
+        top: 12px;
+        right: 12px;
+        height: 100px;
       }
 
       #charity-logo {
         position: absolute;
-        top: 0px;
+        bottom: 0px;
         right: 0px;
-        height: 180px;
+        height: 100px;
       }
 
       cali-break-game {
         position: absolute;
-        left: 750px;
+        right: 0px;
         width: 397px;
 
-        font-size: 24px;
+        font-size: 30px;
+
+        --background-color: var(--color-1);
+        --other-color: var(--color-2);
       }
 
       cali-break-game:nth-of-type(1) {
-        top: 207px;
-
-        --background-color: var(--red-1);
-        --other-color: var(--red-2);
+        top: 307px;
       }
 
       cali-break-game:nth-of-type(2) {
-        top: 326px;
-
-        --background-color: var(--yellow-1);
-        --other-color: var(--yellow-2);
+        top: 424px;
       }
 
       cali-break-game:nth-of-type(3) {
-        top: 445px;
-
-        --background-color: var(--green-1);
-        --other-color: var(--green-2);
+        top: 541px;
       }
 
       cali-break-game:nth-of-type(4) {
-        top: 564px;
-
-        --background-color: var(--blue-1);
-        --other-color: var(--blue-2);
+        top: 658px;
       }
 
       #host-music {
-        position: absolute;
-        top: 495px;
-        left: 46px;
-        width: 581px;
+        bottom: 576px;
 
         display: flex;
         flex-direction: column;
       }
 
       cali-break-host {
-        font-size: 24px;
-        background-color: var(--teal-1);
+        font-size: 30px;
+        background-color: var(--color-1);
       }
 
       cali-break-song {
-        font-size: 24px;
-        background-color: var(--teal-2);
+        font-size: 30px;
+        background-color: var(--color-2);
       }
 
       #host-music-row {
         height: 5px;
-        background-color: var(--teal-1);
+        background-color: var(--color-1);
       }
 
       cali-break-content {
+        top: 588px;
+        font-size: 30px;
+      }
+
+      #host-music, cali-break-content, #scenery {
         position: absolute;
-        top: 605px;
-        left: 46px;
-        width: 581px;
-        font-size: 24px;
-        --color-1: var(--blue-1);
-        --color-2: var(--blue-2);
+        left: 22px;
+        width: 795px;
       }
 
       #scenery {
         position: absolute;
-        top: 140px;
-        left: 46px;
-        width: 581px;
-        height: 355px;
+        top: 144px;
+        height: 444px;
 
         box-sizing: border-box;
         background-size: cover;
@@ -131,7 +118,7 @@
         height: 66px;
 
         background-color: rgba(33, 33, 43, 0.8);
-        font-size: 28px;
+        font-size: 30px;
         color: white;
       }
 
@@ -166,34 +153,35 @@
 
       #total {
         position: absolute;
-        top: 564px;
-        left: 750px;
-        width: 397px;
+        top: 160px;
+        right: 0px;
+        width: 435px;
       }
 
       cali-break-total {
-        background-color: var(--blue-1);
+        background-color: var(--color-1);
         font-size: 48px;
+        font-weight: bold;
       }
 
       #donate, #record {
-        background-color: var(--blue-2);
+        background-color: var(--color-2);
         color: white;
         text-align: center;
       }
 
       #donate {
-        font-size: 20px;
+        font-size: 30px;
       }
 
       #record {
         display: none;
-        font-size: 24px;
+        font-size: 30px;
       }
 
       #total-row {
         height: 5px;
-        background-color: var(--blue-1);
+        background-color: var(--color-1);
       }
 
       [hidden] {

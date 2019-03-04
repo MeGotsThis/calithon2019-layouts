@@ -21,10 +21,14 @@
         display: flex;
         flex-direction: column;
         position: absolute;
-        top: 247px;
+        top: 0px;
         left: 0px;
         bottom: 0px;
         width: 392px;
+      }
+
+      #camera {
+        height: 247px;
       }
 
       #runners {
@@ -38,9 +42,9 @@
       }
 
       cali-nameplate {
-        font-size: 28px;
+        font-size: 30px;
 
-        --name-color: var(--info-color-1);
+        --name-color: var(--runner-1-color-1);
       }
 
       /* One runner */
@@ -65,18 +69,18 @@
       }
 
       cali-timer {
-        font-weight: 800;
+        font-weight: bold;
         font-size: 48px;
 
-        --timer-primary-color: var(--info-color-1);
-        --timer-secondary-color: var(--info-color-2);
+        --timer-primary-color: var(--runner-1-color-1);
+        --timer-secondary-color: var(--runner-1-color-2);
       }
 
       cali-run-info {
-        font-size: 28px;
+        font-size: 30px;
 
-        --run-primary-color: var(--runner-1-color-1);
-        --run-secondary-color: var(--runner-1-color-2);
+        --run-primary-color: var(--info-color-1);
+        --run-secondary-color: var(--info-color-2);
       }
 
       cali-sponsors {
@@ -98,6 +102,8 @@
     </div>
     <div id="main-area">
       <div id="left">
+        <cali-run-info></cali-run-info>
+        <div id="camera"></div>
         <div id="runners">
           <cali-nameplate index="0"></cali-nameplate>
           <cali-nameplate index="1" right></cali-nameplate>
@@ -105,7 +111,6 @@
           <cali-nameplate index="3" right></cali-nameplate>
         </div>
         <cali-timer></cali-timer>
-        <cali-run-info></cali-run-info>
         <div id="sponsors">
           <cali-sponsors></cali-sponsors>
         </div>

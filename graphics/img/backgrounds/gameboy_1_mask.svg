@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720">
   <defs>
     <rect id="game-feed" x="538" y="0" width="742" height="667" />
-    <rect id="webcam" x="0" y="0" width="538" height="247" />
+    <rect id="webcam" x="0" y="95" width="538" height="247" />
     <mask id="image-mask">
       <rect x="0" y="0" width="1280" height="720" fill="white" />
       <use href="#game-feed" fill="black" />

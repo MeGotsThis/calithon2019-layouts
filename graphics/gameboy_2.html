@@ -9,7 +9,7 @@
   <link rel="import" href="elements/molecules/cali-nameplate/cali-nameplate.html">
   <link rel="import" href="elements/molecules/cali-run-info/cali-run-info.html">
   <link rel="import" href="elements/molecules/cali-sponsors/cali-sponsors.html">
-  <link rel="import" href="elementsmolecules//cali-timer/cali-timer.html">
+  <link rel="import" href="elements/molecules/cali-timer/cali-timer.html">
 
   <custom-style>
     <style>
@@ -33,7 +33,7 @@
         position: absolute;
         top: 478px;
         width: 365px;
-        font-size: 28px;
+        font-size: 30px;
       }
 
       cali-nameplate[index="0"] {
@@ -48,7 +48,7 @@
         position: absolute;
         bottom: 189px;
         width: 353px;
-        font-size: 32px;
+        font-size: 30px;
       }
 
       cali-finish-time[index="0"] {
@@ -72,20 +72,23 @@
       }
 
       cali-run-info {
-        font-size: 28px;
+        flex: 1;
+        font-size: 30px;
 
         --run-primary-color: var(--info-color-1);
         --run-secondary-color: var(--info-color-2);
       }
 
       cali-timer {
-        flex: 1;
+        position: absolute;
+        top: 478px;
+        left: 470px;
+        right: 470px;
+        font-weight: bold;
+        font-size: 36px;
 
-        font-weight: 800;
-        font-size: 38px;
-
-        --timer-primary-color: var(--info-color-1);
-        --timer-secondary-color: var(--info-color-2);
+        --timer-primary-color: var(--runner-1-color-1);
+        --timer-secondary-color: var(--runner-1-color-2);
       }
 
       cali-sponsors {
@@ -107,10 +110,10 @@
     </div>
     <div id="main-area">
       <div id="info">
-        <cali-timer></cali-timer>
         <cali-run-info></cali-run-info>
       </div>
       <cali-nameplate index="0"></cali-nameplate>
+      <cali-timer></cali-timer>
       <cali-nameplate index="1" right></cali-nameplate>
       <cali-finish-time index="0" attach="bottom"></cali-finish-time>
       <cali-finish-time index="1" attach="bottom" reverse></cali-finish-time>

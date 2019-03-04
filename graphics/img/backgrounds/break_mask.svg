@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720">
   <defs>
-    <rect id="webcam" x="46" y="140" width="581" height="355" />
+    <rect id="webcam" x="23" y="144" width="794" height="444" />
     <mask id="image-mask">
       <rect x="0" y="0" width="1280" height="720" fill="white" />
       <use href="#webcam" fill="black" />

@@ -4,7 +4,7 @@
     <rect id="game-feed-2" x="843" y="0" width="437" height="328" />
     <rect id="game-feed-3" x="0" y="333" width="437" height="328" />
     <rect id="game-feed-4" x="843" y="333" width="437" height="328" />
-    <rect id="webcam" x="437" y="128" width="406" height="254" />
+    <rect id="webcam" x="437" y="513" width="406" height="148" />
     <mask id="image-mask">
       <rect x="0" y="0" width="1280" height="720" fill="white" />
       <use href="#game-feed-1" fill="black" />

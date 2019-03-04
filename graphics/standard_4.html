@@ -18,12 +18,6 @@
       }
 
       #middle {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 382px;
-        left: 437px;
-        width: 406px;
       }
 
       .game {
@@ -56,7 +50,7 @@
       cali-nameplate {
         position: absolute;
         width: 391px;
-        font-size: 28px;
+        font-size: 30px;
       }
 
       cali-nameplate[index="0"],
@@ -73,7 +67,7 @@
         position: absolute;
         width: 222px;
         height: 1.5em;
-        font-size: 28px;
+        font-size: 30px;
       }
 
       cali-finish-time[index="0"],
@@ -88,22 +82,22 @@
 
       cali-nameplate[index="0"],
       cali-finish-time[index="0"] {
-        top: 5px;
+        top: 174px;
       }
 
       cali-nameplate[index="1"],
       cali-finish-time[index="1"] {
-        top: 74px;
+        top: 239px;
       }
 
       cali-nameplate[index="2"],
       cali-finish-time[index="2"] {
-        bottom: 74px;
+        top: 383px;
       }
 
       cali-nameplate[index="3"],
       cali-finish-time[index="3"] {
-        bottom: 5px;
+        top: 448px;
       }
 
       cali-nameplate[index="0"],
@@ -135,18 +129,28 @@
       }
 
       cali-run-info {
-        font-size: 28px;
+        position: absolute;
+        top: 0;
+        left: 437px;
+        right: 437px;
+
+        font-size: 30px;
 
         --run-primary-color: var(--info-color-1);
         --run-secondary-color: var(--info-color-2);
       }
 
       cali-timer {
-        font-weight: 800;
-        font-size: 42px;
+        position: absolute;
+        top: 304px;
+        left: 437px;
+        right: 437px;
 
-        --timer-primary-color: var(--info-color-1);
-        --timer-secondary-color: var(--info-color-2);
+        font-weight: bold;
+        font-size: 48px;
+
+        --timer-primary-color: var(--runner-1-color-1);
+        --timer-secondary-color: var(--runner-1-color-2);
       }
     </style>
   </custom-style>
@@ -158,10 +162,8 @@
       <div id="background-overlay"></div>
     </div>
     <div id="main-area">
-      <div id="middle">
-        <cali-timer></cali-timer>
-        <cali-run-info></cali-run-info>
-      </div>
+      <cali-timer></cali-timer>
+      <cali-run-info></cali-run-info>
       <cali-nameplate index="0"></cali-nameplate>
       <cali-nameplate index="1" right></cali-nameplate>
       <cali-nameplate index="2"></cali-nameplate>

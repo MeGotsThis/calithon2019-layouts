@@ -2,7 +2,7 @@
   <defs>
     <rect id="game-feed-1" x="0" y="0" width="637" height="478" />
     <rect id="game-feed-2" x="643" y="0" width="637" height="478" />
-    <rect id="webcam" x="470" y="478" width="340" height="189" />
+    <rect id="webcam" x="470" y="522" width="340" height="145" />
     <mask id="image-mask">
       <rect x="0" y="0" width="1280" height="720" fill="white" />
       <use href="#game-feed-1" fill="black" />

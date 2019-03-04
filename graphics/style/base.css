@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700,800,900');
 @import 'font/SimplyRounded.css';
+@import 'font/Montserrat.css';
 
 body {
-  font-family: 'Nunito', sans-serif;
-  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: normal;
   margin: 0;
   opacity: 0;
 }
@@ -14,33 +15,21 @@ body {
 }
 
 html {
-  --teal-1: #3298A0;
-  --teal-2: #25646B;
+  --color-1: #032e34;
+  --color-2: #004652;
 
-  --blue-1: #1F8FBE;
-  --blue-2: #1F4B61;
+  --info-color-1: var(--color-1);
+  --info-color-2: var(--color-2);
 
-  --red-1: #93494C;
-  --red-2: #673033;
+  --runner-1-color-1: var(--color-2);
+  --runner-1-color-2: var(--color-1);
 
-  --yellow-1: #C8AD59;
-  --yellow-2: #8D7A40;
+  --runner-2-color-1: var(--color-2);
+  --runner-2-color-2: var(--color-1);
 
-  --green-1: #579848;
-  --green-2: #3D6B32;
+  --runner-3-color-1: var(--color-2);
+  --runner-3-color-2: var(--color-1);
 
-  --info-color-1: var(--teal-1);
-  --info-color-2: var(--teal-2);
-
-  --runner-1-color-1: var(--blue-1);
-  --runner-1-color-2: var(--blue-2);
-
-  --runner-2-color-1: var(--red-1);
-  --runner-2-color-2: var(--red-2);
-
-  --runner-3-color-1: var(--yellow-1);
-  --runner-3-color-2: var(--yellow-2);
-
-  --runner-4-color-1: var(--green-1);
-  --runner-4-color-2: var(--green-2);
+  --runner-4-color-1: var(--color-2);
+  --runner-4-color-2: var(--color-1);
 }
