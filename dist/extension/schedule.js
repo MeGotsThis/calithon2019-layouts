@@ -205,7 +205,7 @@ nodecg.listenFor('resetRun', (pk, cb) => {
            if (activeRunReplicant.value && activeRunReplicant.value.pk) {
              const runFromSchedule = findRunByPk(activeRunReplicant.value.pk);
              activeRunReplicant.value =
-               mergeChangesFromTracker(
+               diff_run_1.mergeChangesFromTracker(
                  activeRunReplicant.value, runFromSchedule);
            }
          });
