@@ -32,6 +32,15 @@ async function init() {
     require('./obs');
     require('./nowplaying');
     require('./countdown');
+
+    require('./google-play-music-desktop-replicants');
+    if (nodecg.bundleConfig.googlePlayMusic) {
+      require('./google-play-music-desktop');
+    } else {
+      nodecg.log.warn('"googlePlayMusic" is not defined in cfg! '
+        + 'Google Play Music Desktop Player integration will be disabled.');
+    }
+
     require('./sortable-list');
     require('./oot-bingo');
     require('./caspar');

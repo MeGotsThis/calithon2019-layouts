@@ -95,6 +95,14 @@
         "file": "record-tracker.html",
         "headerColor": "#2d4e8a",
         "workspace": "Setup"
+      },
+      {
+        "name": "gpmd",
+        "title": "GPMDP",
+        "width": 2,
+        "file": "google-play-music-desktop.html",
+        "headerColor": "#2d4e8a",
+        "workspace": "Setup"
       }
     ],
     "graphics": [

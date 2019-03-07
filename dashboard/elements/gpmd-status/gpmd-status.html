@@ -1,0 +1,48 @@
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/nodecg-toggle/nodecg-toggle.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="gpmd-status">
+  <template>
+    <style>
+      :host {
+      }
+
+      #show {
+        margin-left: 4px;
+        margin-right: 4px;
+      }
+
+      #authorization {
+        @apply --layout-horizontal;
+        @apply --layout-center;
+      }
+
+      #authorizationCode {
+        @apply --layout-flex;
+      }
+
+      #authorizationButton {
+        --paper-button: {
+          background-color: #5BA664;
+          color: white;
+        };
+      }
+    </style>
+
+    <nodecg-toggle id="show" disabled replicant-name="gpmd-connected">
+      <span style$="color: [[connectedColor]]; font-weight: [[connectedWeight]]">
+        GPMDP: [[connected]]
+      </span>
+    </nodecg-toggle>
+    <div hidden$="[[!authorizationCodeNeeded]]">
+      <div id="authorization">
+        <paper-input id="authorizationCode" label="Authorization Code"></paper-input>
+        <paper-button id="authorizationButton" on-tap="sendCode">Send</paper-button>
+      </div>
+    </div>
+  </template>
+
+  <script src="gpmd-status.js"></script>
+</dom-module>

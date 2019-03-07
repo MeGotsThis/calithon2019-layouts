@@ -306,6 +306,43 @@
 			"required": ["enabled", "apiId", "apiKey", "restEndpoint"],
 			"default": null
 		},
+    "googlePlayMusic": {
+      "type": ["object", "null"],
+      "description": "Allow connecting to Google Play Music Desktop player",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable the Google Play Music Desktop Player module"
+        },
+        "forcePlay": {
+          "type": ["object", "null"],
+          "description": "Force GPMDP to play on boot if it is not playing",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "type": {
+              "description": "Allowed values: playlists",
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "shuffle": {
+              "type": "string",
+              "default": "NO_SHUFFLE"
+            },
+            "repeat": {
+              "type": "string",
+              "default": "NO_REPEAT"
+            }
+          },
+          "default": null
+        }
+      },
+      "required": ["enabled"],
+      "default": null
+    },
     "techDashboardShowAudioEngineer": {
       "type": "boolean",
       "default": false
