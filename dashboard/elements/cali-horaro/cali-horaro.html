@@ -1,0 +1,72 @@
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../../../bower_components/polymer/lib/utils/render-status.html">
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="cali-horaro">
+  <template>
+    <style>
+      :host {
+        @apply --layout-horizontal;
+        @apply --layout-center;
+        @apply --layout-justified;
+      }
+
+      .column {
+        @apply --layout-horizontal;
+        @apply --layout-center;
+      }
+
+      label {
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 0;
+        pointer-events: none;
+        user-select: none;
+        white-space: nowrap;
+        padding-left: 0.1em;
+      }
+    </style>
+
+    <div class="column">
+      <paper-toggle-button
+        id="horaroUpdate"
+        on-change="_handleUpdateToggleChange">
+      </paper-toggle-button>
+      <label for="horaroUpdate">Update Horaro</label>
+    </div>
+
+    <div class="column">
+      <paper-button raised on-tap="_updateStartTime" disabled="[[startTimeDisabled]]">
+        Edit Start Time
+      </paper-button>
+    </div>
+
+    <div class="column">
+      <paper-button raised on-tap="_updateRunTime" disabled="[[runTimeDisabled]]">
+        Edit Run Time
+      </paper-button>
+    </div>
+
+    <paper-dialog id="startTimeDialog" with-backdrop>
+      <h2>Override Start Time on Horaro</h2>
+      <paper-input id="startTimeValue" label="Start Time (24-hour format)"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-confirm on-tap="_handleStartTimeDialogConfirmed">Accept</paper-button>
+        <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+      </div>
+    </paper-dialog>
+
+    <paper-dialog id="runTimeDialog" with-backdrop>
+      <h2>Override Run Time on Horaro</h2>
+      <paper-input id="runTimeValue" label="Run Time (HH:MM:SS)"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-confirm on-tap="_handleRunTimeDialogConfirmed">Accept</paper-button>
+        <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+      </div>
+    </paper-dialog>
+  </template>
+
+  <script src="cali-horaro.js"></script>
+</dom-module>

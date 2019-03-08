@@ -5,9 +5,10 @@
 	<title>Stream Tech Dashboard</title>
 	<script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 	<link rel="import" href="../shared/elements/interfaces/ui-rundown/ui-rundown.html">
+  <link rel="import" href="elements/cali-camera/cali-camera.html">
+  <link rel="import" href="elements/cali-horaro/cali-horaro.html">
 	<link rel="import" href="elements/gdq-checklist/gdq-checklist.html">
 	<link rel="import" href="elements/gdq-countdown/gdq-countdown.html">
-	<link rel="import" href="elements/gdq-fanart/gdq-fanart.html">
 	<link rel="import" href="elements/gdq-misc-toggles/gdq-misc-toggles.html">
 	<link rel="import" href="elements/gdq-schedule/gdq-schedule.html">
 	<link rel="import" href="elements/gdq-timekeeper/gdq-timekeeper.html">
@@ -48,20 +49,15 @@
 				border: 1px solid black;
 			}
 
-			gdq-fanart {
-				grid-column: 1;
-				grid-row: 1 / 4;
+			#rundownCamera {
+        @apply --layout-vertical;
+				grid-column: 2;
+				grid-row: 1 / 3;
 			}
 
-			gdq-twitter-controls {
-				grid-column: 2;
-				grid-row: 1;
-			}
-
-			ui-rundown {
-				grid-column: 2;
-				grid-row: 2;
-			}
+      ui-rundown {
+        @apply --layout-flex;
+      }
 
 			gdq-misc-toggles {
 				grid-column: 2;
@@ -83,17 +79,17 @@
 			}
 
 			#totalsAndSchedule {
-				/*@apply --layout-vertical;*/
 				grid-column: 4;
 				grid-row: 1 / 3;
 			}
 
-			gdq-marioscores {
+			cali-horaro {
 				grid-column: 4;
 			}
 
-			gdq-schedule {
-				/*@apply --layout-flex;*/
+			cali-camera {
+        margin-top: 16px;
+        padding: 16px;
 			}
 		</style>
 	</custom-style>
@@ -101,10 +97,10 @@
 <body>
 	<div id="wrapper">
 		<div id="container">
-			<gdq-fanart class="bordered"></gdq-fanart>
-
-			<gdq-twitter-controls class="bordered"></gdq-twitter-controls>
-			<ui-rundown class="bordered"></ui-rundown>
+      <div id="rundownCamera">
+        <ui-rundown class="bordered"></ui-rundown>
+        <cali-camera class="bordered"></cali-camera>
+      </div>
 			<gdq-misc-toggles class="bordered"></gdq-misc-toggles>
 
 			<div id="timekeeperAndChecklist">
@@ -118,7 +114,7 @@
 				<gdq-schedule class="bordered"></gdq-schedule>
 
 			</div>
-			<gdq-marioscores class="bordered"></gdq-marioscores>
+      <cali-horaro class="bordered"></cali-horaro>
 		</div>
 	</div>
 </body>

@@ -1,0 +1,42 @@
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../../../bower_components/polymer/lib/utils/render-status.html">
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="cali-camera">
+  <template>
+    <style>
+      :host {
+        @apply --layout-horizontal;
+        @apply --layout-center;
+        @apply --layout-justified;
+      }
+
+      .column {
+        @apply --layout-horizontal;
+        @apply --layout-center;
+      }
+
+      label {
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 0;
+        pointer-events: none;
+        user-select: none;
+        white-space: nowrap;
+        padding-left: 0.1em;
+      }
+    </style>
+
+    <div class="column">
+      <paper-toggle-button
+        id="camera"
+        on-change="_handleUpdateToggleChange">
+      </paper-toggle-button>
+      <label for="camera">Show Camera on Break Scene</label>
+    </div>
+  </template>
+
+  <script src="cali-camera.js"></script>
+</dom-module>
