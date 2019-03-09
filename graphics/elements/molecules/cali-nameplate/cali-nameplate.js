@@ -5,6 +5,7 @@
   const NAME_FADE_IN_EASE = Power1.easeOut;
   const NAME_FADE_OUT_EASE = Power1.easeIn;
   const currentRun = nodecg.Replicant('currentRun');
+  const gameAudioChannels = nodecg.Replicant('gameAudioChannels');
 
   class CaliNameplate extends Polymer.Element {
     static get is() {
@@ -25,6 +26,19 @@
         twitch: {
           type: String,
           value: '',
+        },
+        audio: {
+          type: Boolean,
+          reflectToAttribute: true,
+          value: false
+        },
+        noAudio: {
+          type: Boolean,
+          reflectToAttribute: true,
+          value: false
+        },
+        audioClassName: {
+          computed: 'computeAudioClass(audio)',
         },
       };
     }
@@ -61,6 +75,7 @@
 
       // Attach replicant change listeners.
       currentRun.on('change', this.currentRunChanged.bind(this));
+      gameAudioChannels.on('change', this.gameAudioChannelsChanged);
     }
 
     /*
@@ -169,6 +184,28 @@
       } else {
         TweenLite.set(this.$.twitch, {scaleX: 1});
       }
+    }
+
+    gameAudioChannelsChanged(newVal) {
+      if (this.noAudio) {
+        return;
+      }
+
+      if (!newVal || newVal.length <= 0) {
+        return;
+      }
+
+      const channels = newVal[this.index];
+      const canHearSd = !channels.sd.muted && !channels.sd.fadedBelowThreshold;
+      const canHearHd = !channels.hd.muted && !channels.hd.fadedBelowThreshold;
+      this.audio = canHearSd || canHearHd;
+    }
+
+    computeAudioClass(audio) {
+      if (!audio) {
+        return "hidden";
+      }
+      return "";
     }
   }
 
