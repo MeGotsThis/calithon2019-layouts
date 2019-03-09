@@ -42,6 +42,33 @@ function formatMilliseconds(inputMs) {
     return str;
 }
 exports.formatMilliseconds = formatMilliseconds;
+
+function formatSeconds(inputSeconds, {showHours=false}) {
+  let str = '';
+  if (inputSeconds < 0) {
+    str = '-';
+    inputSeconds = -inputSeconds;
+  }
+
+  const {days, hours, minutes, seconds, milliseconds} =
+    parseMilliseconds(inputSeconds * 1000);
+
+  if (days) {
+    str += `${days}d `;
+  }
+
+  if (hours || showHours) {
+    str += `${hours}:`;
+  }
+
+  const paddedMinutes = String(minutes).padStart(2, '0');
+  const paddedSeconds = String(seconds).padStart(2, '0');
+
+  str += `${paddedMinutes}:${paddedSeconds}`;
+  return str;
+}
+exports.formatSeconds = formatSeconds;
+
 /**
  * Parses a number of milliseconds into a ParsedTime object.
  * @param milliseconds - A number of milliseconds.

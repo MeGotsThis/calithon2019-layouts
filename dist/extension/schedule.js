@@ -54,16 +54,18 @@ nodecg.listenFor('nextRun', (_data, cb) => {
         nodecg.log.error('Attempted to seek to nextRun while seeking was forbidden.');
         return cb();
     }
-    _seekToNextRun();
-    cb();
+    _seekToNextRun().then(() => {
+      cb();
+    });
 });
 nodecg.listenFor('previousRun', (_data, cb) => {
     if (!canSeekScheduleRep.value) {
         nodecg.log.error('Attempted to seek to previousRun while seeking was forbidden.');
         return cb();
     }
-    _seekToPreviousRun();
-    cb();
+    _seekToPreviousRun().then(() => {
+      cb();
+    });
 });
 nodecg.listenFor('setCurrentRunByOrder', (order, cb) => {
     if (!canSeekScheduleRep.value) {
@@ -249,7 +251,7 @@ nodecg.listenFor('resetRun', (pk, cb) => {
  * Clones the value of currentRun into nextRun.
  * Sets currentRun to the predecessor run.
  */
-function _seekToPreviousRun() {
+async function _seekToPreviousRun() {
     const prevRun = scheduleRep.value.slice(0).reverse().find((item) => {
         if (item.type !== 'run') {
             return false;
@@ -260,18 +262,20 @@ function _seekToPreviousRun() {
     currentRunRep.value = clone(prevRun);
     checklist.reset();
     timer.reset();
+    await horaroApi.runChanging();
 }
 /**
  * Seeks to the next run in the schedule, updating currentRun and nextRun accordingly.
  * Clones the value of nextRun into currentRun.
  * Sets nextRun to the new successor run.
  */
-function _seekToNextRun() {
+async function _seekToNextRun() {
     const newNextRun = _findRunAfter(nextRunRep.value);
     currentRunRep.value = clone(nextRunRep.value);
     nextRunRep.value = clone(newNextRun);
     checklist.reset();
     timer.reset();
+    await horaroApi.runChanging();
 }
 /**
  * Finds the first run that comes after a given run.
@@ -295,10 +299,10 @@ function _findRunAfter(runOrOrder) {
  * Else, blow away currentRun and nextRun and replace them with the new run and its successor.
  * @param runOrOrder - Either a run order or a run object to set as the new currentRun.
  */
-function _seekToArbitraryRun(runOrOrder) {
+async function _seekToArbitraryRun(runOrOrder) {
     const run = _resolveRunOrOrder(runOrOrder);
     if (nextRunRep.value && run.order === nextRunRep.value.order) {
-        _seekToNextRun();
+        await _seekToNextRun();
     }
     else {
         currentRunRep.value = clone(run);
@@ -306,6 +310,7 @@ function _seekToArbitraryRun(runOrOrder) {
         nextRunRep.value = clone(newNextRun);
         checklist.reset();
         timer.reset();
+        await horaroApi.runChanging();
     }
 }
 /**
