@@ -1,69 +1,67 @@
-(function() {
-  const allBids = nodecg.Replicant('allBids');
-  const currentRun = nodecg.Replicant('currentRun');
-  const runOrderMap = nodecg.Replicant('runOrderMap');
+(function () {
+	const allBids = nodecg.Replicant('allBids');
+	const currentRun = nodecg.Replicant('currentRun');
+	const runOrderMap = nodecg.Replicant('runOrderMap');
 
-  class CaliHostdashBids extends Polymer.MutableData(Polymer.Element) {
-    static get is() {
-      return 'gdq-dash-host-bids';
-    }
+	class DashHostBids extends Polymer.MutableData(Polymer.Element) {
+		static get is() {
+			return 'dash-host-bids';
+		}
 
-    static get properties() {
-      return {
-        relevantBids: {
-          type: Array,
-        },
-        bidFilterString: {
-          type: String,
-          notify: true,
-        },
-      };
-    }
+		static get properties() {
+			return {
+				relevantBids: {
+					type: Array
+				},
+				bidFilterString: {
+					type: String,
+					notify: true
+				},
+				dialogBid: Object
+			};
+		}
 
-    ready() {
-      super.ready();
-      allBids.on('change', () => {
-        this.recalcRelevantBids();
-      });
+		ready() {
+			super.ready();
+			allBids.on('change', () => {
+				this.recalcRelevantBids();
+			});
 
-      currentRun.on('change', () => {
-        this.recalcRelevantBids();
-      });
+			currentRun.on('change', () => {
+				this.recalcRelevantBids();
+			});
 
-      runOrderMap.on('change', () => {
-        this.recalcRelevantBids();
-      });
+			runOrderMap.on('change', () => {
+				this.recalcRelevantBids();
+			});
 
-      nodecg.listenFor('bids:updating', () => {
-        this.$.cooldown.indeterminate = true;
-      });
+			nodecg.listenFor('bids:updating', () => {
+				this.$.cooldown.indeterminate = true;
+			});
 
-      nodecg.listenFor('bids:updated', () => {
-        this.$.cooldown.indeterminate = false;
-        this.$.cooldown.classList.remove('transiting');
-        this.$.cooldown.value = 100;
+			nodecg.listenFor('bids:updated', () => {
+				this.$.cooldown.startCountdown(60);
+			});
+		}
 
-        Polymer.RenderStatus.afterNextRender(this, () => {
-          this.$.cooldown.classList.add('transiting');
-          this.$.cooldown.value = 0;
-        });
-      });
-    }
+		closeDialog() {
+			this.$.dialog.close();
+		}
 
-    computeBidsFilter(string) {
-      if (string) {
-        // Return a filter function for the current search string.
-        const regexp = new RegExp(string, 'ig');
-        return function(bid) {
-          return regexp.test(bid.description);
-        };
-      }
+		computeBidsFilter(string) {
+			if (string) {
+				// Return a filter function for the current search string.
+				const regexp = new RegExp(escapeRegExp(string), 'ig');
+				return function (bid) {
+					return regexp.test(bid.description);
+				};
+			}
 
-      // Set filter to null to disable filtering.
-      return null;
-    }
+			// Set filter to null to disable filtering.
+			return null;
+		}
 
-    recalcRelevantBids() {
+		recalcRelevantBids() {
       if (allBids.status !== 'declared'
         || currentRun.status !== 'declared'
         || runOrderMap.status !== 'declared'
@@ -74,6 +72,9 @@
       }
 
       this.relevantBids = allBids.value.filter((bid) => {
+        if (bid.type === 'milestone') {
+          return false;
+        }
         if (bid.speedrun == null) {
           return false;
         }
@@ -81,8 +82,25 @@
       }).sort((a, b) => {
         return a.speedrun - b.speedrun;
       });
-    }
-  }
+		}
 
-  customElements.define(CaliHostdashBids.is, CaliHostdashBids);
+		calcBidName(description) {
+			return description.replace('||', ' -- ');
+		}
+
+		_handleBidTap(e) {
+			if (e.target.bid.type !== 'choice-many') {
+				return;
+			}
+
+			this.dialogBid = e.target.bid;
+			this.$.dialog.open();
+		}
+	}
+
+	function escapeRegExp(text) {
+		return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+	}
+
+	customElements.define(DashHostBids.is, DashHostBids);
 })();

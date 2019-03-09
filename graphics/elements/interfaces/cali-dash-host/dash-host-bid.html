@@ -1,119 +1,77 @@
 <link rel="import" href="../../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="dash-host-bid-option.html">
 <link rel="import" href="dash-host-styles.html">
 
 <dom-module id="dash-host-bid">
-  <template>
-    <style include="dash-host-styles iron-flex iron-flex-alignment">
-      :host {
-        display: block;
-        font-size: 20px;
-        font-weight: 500;
-        padding-bottom: 10px;
-        @apply --layout-flex-none;
-      }
+	<template>
+		<style include="dash-host-styles iron-flex iron-flex-alignment">
+			:host {
+				display: block;
+				font-size: 20px;
+				font-weight: 500;
+				padding-bottom: 10px;
+				@apply --layout-flex-none;
+			}
 
-      :host(:first-of-type) {
-        padding-top: 4px;
-      }
+			:host(:first-of-type) {
+				padding-top: 4px;
+			}
 
-      :host(:last-of-type) {
-        padding-bottom: 4px;
-      }
+			:host(:last-of-type) {
+				padding-bottom: 4px;
+			}
 
-      #material {
-        padding: 12px;
-      }
+			#material {
+				padding: 12px;
+			}
 
-      .option {
-        font-weight: 400;
-        font-size: 18px;
-        margin-top: 14px;
-      }
+			#challengeProgress {
+				font-weight: bold;
+			}
 
-      /* Bold the name of the winning option. */
-      .option[data-index="0"] {
-        font-weight: 600;
-      }
+			.additionalOptions {
+				font-size: 16px;
+				margin-top: 8px;
+				margin-bottom: -4px;
+				text-align: right;
+				color: #2c92ff;
+			}
 
-      .option-name {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        @apply --layout-flex;
-      }
+			:host(:hover) .additionalOptions {
+				text-decoration: underline;
+			}
 
-      .option-total {
-        margin-left: 1em;
-        @apply --layout-flex-none;
-      }
+			:host([closed]) #material {
+				background-color: #cfffcf;
+			}
 
-      .option-meter {
-        position: relative;
-        height: 7px;
-        width: 100%;
-        margin-top: 3px;
-        background-color: #D8D8D8;
-      }
+			:host([failed]) #material {
+				/* override [closed] style */
+				background-color: #ffe2e2;
+			}
+		</style>
 
-      .option-meter-fill {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #8560a8;
-        transform: scaleX(0);
-        transform-origin: left;
-      }
+		<div id="material" class="material stroked">
+			<div>[[calcBidName(bid.description)]]</div>
 
-      .additionalOptions {
-        font-size: 16px;
-        margin-top: 8px;
-        margin-bottom: -4px;
-        text-align: right;
-      }
+			<template is="dom-if" if="[[bidIsChallenge(bid)]]">
+				<div id="challengeProgress">[[bid.total]] / [[bid.goal]]</div>
+			</template>
 
-      :host([closed]) #material {
-        background-color: #cfffcf;
-      }
+			<template is="dom-if" if="[[!bidIsChallenge(bid)]]">
+				<template is="dom-repeat" items="[[limitOptions(bid.options)]]" as="option">
+					<dash-host-bid-option bid="[[bid]]" option="[[option]]" index="[[index]]"></dash-host-bid-option>
+				</template>
 
-      :host([failed]) #material {
-        /* override [closed] style */
-        background-color: #ffe2e2;
-      }
-    </style>
+				<template is="dom-if" if="[[bidHasMoreThanThreeOptions(bid)]]">
+					<div class="additionalOptions">
+						Click to show [[calcNumAdditionalOptions(bid)]] additional option(s)
+					</div>
+				</template>
+			</template>
+		</div>
+	</template>
 
-    <div id="material" class="material stroked">
-      <div>[[calcBidName(bid.description)]]</div>
-
-      <template is="dom-if" if="[[bidIsChallenge(bid)]]">
-        <div class="layout horizontal center">
-          [[bid.total]] / [[bid.goal]]
-        </div>
-      </template>
-
-      <template is="dom-if" if="[[!bidIsChallenge(bid)]]">
-        <template is="dom-repeat" items="[[limitOptions(bid.options)]]" as="option">
-          <div class="option" data-index$="[[index]]">
-            <div class="layout horizontal justified">
-              <div class="option-name" title="[[option.name]]">[[option.name]]</div>
-              <div class="option-total">[[option.total]]</div>
-            </div>
-            <div class="option-meter">
-              <div class="option-meter-fill" style="[[calcOptionMeterFillStyle(bid, option)]]"></div>
-            </div>
-          </div>
-        </template>
-
-        <template is="dom-if" if="[[bidHasMoreThanThreeOptions(bid)]]">
-          <div class="additionalOptions">
-            [[calcNumAdditionalOptions(bid)]] additional option(s) not shown
-          </div>
-        </template>
-      </template>
-    </div>
-  </template>
-
-  <script src="dash-host-bid.js"></script>
+	<script src="dash-host-bid.js"></script>
 </dom-module>

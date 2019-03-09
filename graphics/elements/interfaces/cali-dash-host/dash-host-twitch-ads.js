@@ -24,12 +24,18 @@
       super.ready();
 
       timeSince.on('change', (newVal) => {
+        if (!newVal) {
+          return;
+        }
         this.timeSince = newVal.formatted.split('.')[0];
         this.updatePlayDisabled();
       });
 
       timeLeft.on('change', (newVal) => {
-        this.timeLeft = newVal.formatted.split('.')[0];
+      if (!newVal) {
+        return;
+      }
+      this.timeLeft = newVal.formatted.split('.')[0];
         this.updatePlayDisabled();
       });
     }
