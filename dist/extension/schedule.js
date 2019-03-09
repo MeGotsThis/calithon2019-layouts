@@ -258,11 +258,12 @@ async function _seekToPreviousRun() {
         }
         return item.order < currentRunRep.value.order;
     });
-    nextRunRep.value = clone(currentRunRep.value);
-    currentRunRep.value = clone(prevRun);
     checklist.reset();
     timer.reset();
     await horaroApi.runChanging();
+
+    nextRunRep.value = clone(currentRunRep.value);
+    currentRunRep.value = clone(prevRun);
 }
 /**
  * Seeks to the next run in the schedule, updating currentRun and nextRun accordingly.
@@ -271,11 +272,12 @@ async function _seekToPreviousRun() {
  */
 async function _seekToNextRun() {
     const newNextRun = _findRunAfter(nextRunRep.value);
-    currentRunRep.value = clone(nextRunRep.value);
-    nextRunRep.value = clone(newNextRun);
     checklist.reset();
     timer.reset();
     await horaroApi.runChanging();
+
+    currentRunRep.value = clone(nextRunRep.value);
+    nextRunRep.value = clone(newNextRun);
 }
 /**
  * Finds the first run that comes after a given run.
@@ -305,12 +307,13 @@ async function _seekToArbitraryRun(runOrOrder) {
         await _seekToNextRun();
     }
     else {
-        currentRunRep.value = clone(run);
-        const newNextRun = _findRunAfter(run);
-        nextRunRep.value = clone(newNextRun);
         checklist.reset();
         timer.reset();
         await horaroApi.runChanging();
+
+        currentRunRep.value = clone(run);
+        const newNextRun = _findRunAfter(run);
+        nextRunRep.value = clone(newNextRun);
     }
 }
 /**
