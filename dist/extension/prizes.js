@@ -22,6 +22,7 @@ setInterval(() => {
  * Grabs the latest prizes from the tracker.
  */
  async function update() {
+   nodecg.sendMessage('prizes:updating');
    const rewards = await tiltify.getRewards();
 
    const _allPrizes = rewards.map(formatPrize);
@@ -34,6 +35,7 @@ setInterval(() => {
    if (!equal(currentPrizesRep.value, _currentPrizes)) {
      currentPrizesRep.value = _currentPrizes;
    }
+   nodecg.sendMessage('prizes:updated');
  }
 /**
  * Formats a raw prize object from the GDQ Tracker API into a slimmed-down version for our use.
